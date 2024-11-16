@@ -1,1 +1,8 @@
 <p>home works!</p>
+<ul>
+    @for (transaction of transactions; track $index; let i=$index) {
+        <li>
+            {{transaction.name}}
+        </li>
+    }
+</ul>
