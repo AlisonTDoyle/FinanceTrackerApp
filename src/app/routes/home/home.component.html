@@ -1,8 +1,31 @@
-<p>home works!</p>
-<ul>
-    @for (transaction of transactions; track $index; let i=$index) {
-        <li>
-            {{transaction.name}}
-        </li>
-    }
-</ul>
+<div class="flex-display">
+    <div class="col-fill">Some Charts Here</div>
+    <div class="col-fill">
+        <div class="container">
+            <h2>Recent Transactions</h2>
+            <ul class="hidden-bullet-list">
+                @for (transaction of transactions; track $index; let i = $index;) {
+                    <li>
+                        <mat-card class="card">
+                            <mat-card-header>
+                                <mat-card-title>{{transaction.name}}</mat-card-title>
+                                <mat-card-subtitle>
+                                    
+                                </mat-card-subtitle>
+                            </mat-card-header>
+
+                            <mat-card-content>
+                                {{transaction.description}}
+                            </mat-card-content>
+
+                            <mat-card-actions>
+                                <button mat-button>Edit</button>
+                                <button mat-button (click)="DeleteTransaction(transaction)">Delete</button>
+                            </mat-card-actions>
+                        </mat-card>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
