@@ -1,48 +1,77 @@
-<form>
+<form [formGroup]="transactionForm" (submit)="onSubmit()">
     <h2>{{formTile}}</h2>
     <!-- Name field -->
     <mat-form-field appearance="outline" style="width: 100%;">
         <mat-label>Name</mat-label>
-        <input matInput formControlName="student_id">
+        <input matInput formControlName="name">
+        @if (name?.hasError('required') ){
+        <mat-error>Name is required </mat-error>
+        }
+        @else if (name?.hasError('minlength')) {
+        <mat-error>Name must be at least 3 chars </mat-error>
+        }
     </mat-form-field>
     <br>
     <!-- Date field -->
     <mat-form-field appearance="outline" style="width: 100%;">
         <mat-label>Date</mat-label>
-        <input matInput [matDatepicker]="picker">
+        <input matInput [matDatepicker]="picker" formControlName="date">
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+        @if (date?.hasError('required')) {
+        <mat-error>Date is required </mat-error>
+        }
     </mat-form-field>
     <br>
     <!-- Transaction type field -->
     <mat-form-field appearance="outline" style="width: 100%;">
         <mat-label>Transaction Type</mat-label>
-        <mat-select>
+        <mat-select formControlName="type">
             @for (type of transactionTypes; track type;) {
             <mat-option [value]="type">{{type}}</mat-option>
             }
         </mat-select>
+        @if (type?.hasError('required')) {
+        <mat-error>Type is required </mat-error>
+        }
     </mat-form-field>
     <br>
     <!-- Value field -->
     <mat-form-field appearance="outline" style="width: 100%;">
         <mat-label>Value</mat-label>
         <span matTextPrefix>€ &nbsp;</span>
-        <input matInput type="number" formControlName="student_id">
+        <input matInput type="number" formControlName="price">
+        @if (price?.hasError('required')) {
+        <mat-error>Value is required </mat-error>
+        }
+        @else if (price?.hasError('min')) {
+        <mat-error>Value must have a minimum value of €0</mat-error>
+        }
     </mat-form-field>
     <br>
     <!-- Description field -->
     <mat-form-field appearance="outline" style="width: 100%;">
         <mat-label>Description</mat-label>
-        <textarea matInput formControlName="student_id" style="max-height: 6rem;"></textarea>
+        <textarea matInput formControlName="description" style="max-height: 6rem;"></textarea>
+        @if (description?.hasError('maxLength')) {
+        <mat-error>Description has a maximum length of 150 chars</mat-error>
+        }
+    </mat-form-field>
+    <br>
+    <!-- Category field -->
+    <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category">
+            @for (category of categories; track category;) {
+            <mat-option [value]="category._id">{{category.name}}</mat-option>
+            }
+        </mat-select>
+        @if (category?.hasError('required')) {
+        <mat-error>Category is required </mat-error>
+        }
     </mat-form-field>
     <!-- Submit form button -->
     <div style="text-align: center; width: 100%;">
-        @if (existingTransaction == null) {
-        <button mat-flat-button (click)="CreateTransaction()">Create Transaction</button>
-        }
-        @else {
-        <button mat-flat-button (click)="UpdateTransaction()">Update Transaction</button>
-        }
+        <button mat-flat-button>{{submitButtonText}}</button>
     </div>
 </form>
