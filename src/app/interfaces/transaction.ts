@@ -7,3 +7,8 @@ export interface Transaction {
     price:number;
     type:string;
 }
+
+export enum TransactionType {
+    outgoing,
+    incomming
+}

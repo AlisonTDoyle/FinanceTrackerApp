@@ -1,0 +1,48 @@
+<form>
+    <h2>{{formTile}}</h2>
+    <!-- Name field -->
+    <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="student_id">
+    </mat-form-field>
+    <br>
+    <!-- Date field -->
+    <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <br>
+    <!-- Transaction type field -->
+    <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Transaction Type</mat-label>
+        <mat-select>
+            @for (type of transactionTypes; track type;) {
+            <mat-option [value]="type">{{type}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    <br>
+    <!-- Value field -->
+    <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Value</mat-label>
+        <span matTextPrefix>€ &nbsp;</span>
+        <input matInput type="number" formControlName="student_id">
+    </mat-form-field>
+    <br>
+    <!-- Description field -->
+    <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="student_id" style="max-height: 6rem;"></textarea>
+    </mat-form-field>
+    <!-- Submit form button -->
+    <div style="text-align: center; width: 100%;">
+        @if (existingTransaction == null) {
+        <button mat-flat-button (click)="CreateTransaction()">Create Transaction</button>
+        }
+        @else {
+        <button mat-flat-button (click)="UpdateTransaction()">Update Transaction</button>
+        }
+    </div>
+</form>
