@@ -29,7 +29,11 @@ export class FinanceTrackerApiService {
   }
 
   public ReadTransactions() {
-    return this._httpClient.get<Transaction[]>(this._transactionUrl);
+      return this._httpClient.get<Transaction[]>(this._transactionUrl);
+  }
+
+  public ReadTransactionsFiltered(filter:any) {
+    return this._httpClient.post<Transaction[]>(this._transactionUrl + "/filtered", filter);
   }
 
   public UpdateTransaction(id: string | undefined, transaction: Transaction) {
