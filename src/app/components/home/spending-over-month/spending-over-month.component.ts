@@ -34,7 +34,7 @@ export class SpendingOverMonthComponent implements OnInit {
       }
     }
 
-    this._financeTrackerApi.ReadTransactionsFiltered(filter).subscribe((transactions: Transaction[]) => {
+    this._financeTrackerApi.ReadTransactionsFiltered(filter, true, null, null).subscribe((transactions: Transaction[]) => {
       this.transactions = transactions;
       this.CreateChart()
     })

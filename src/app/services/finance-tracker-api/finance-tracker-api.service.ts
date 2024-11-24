@@ -10,7 +10,7 @@ import { Budget } from '../../interfaces/budget';
 export class FinanceTrackerApiService {
   // Properties
   private _transactionUrl: string = "http://localhost:3000/api/v1/transaction";
-  private _budgetUrl:string = "http://localhost:3000/api/v1/budget";
+  private _budgetUrl: string = "http://localhost:3000/api/v1/budget";
 
   // Constructor
   constructor(private _httpClient: HttpClient) { }
@@ -19,21 +19,35 @@ export class FinanceTrackerApiService {
   //#region transactions
   public CreateTransaction(newTransaction: Transaction) {
     return this._httpClient.post<Transaction>(this._transactionUrl, newTransaction)
-    .pipe(
-      tap((data) => {
-        // Debug message
-        console.log('Data: ' + JSON.stringify(data))
-      }),
-      catchError(this.HandleError)
-    );
+      .pipe(
+        tap((data) => {
+          // Debug message
+          console.log('Data: ' + JSON.stringify(data))
+        }),
+        catchError(this.HandleError)
+      );
   }
 
   public ReadTransactions() {
-      return this._httpClient.get<Transaction[]>(this._transactionUrl);
+    return this._httpClient.get<Transaction[]>(this._transactionUrl);
   }
 
-  public ReadTransactionsFiltered(filter:any) {
-    return this._httpClient.post<Transaction[]>(this._transactionUrl + "/filtered", filter);
+  public ReadTransactionsFiltered(filter: any, ascending: boolean | null, pageSize: number | null, pageNo: number | null) {
+    let urlParameters = "?";
+
+    if (ascending != null) {
+      urlParameters += `asc=${ascending}&`;
+    }
+
+    if (pageSize != null) {
+      urlParameters += `pageSize=${pageSize}&`;
+    }
+
+    if (pageNo != null) {
+      urlParameters += `page=${pageNo}&`
+    }
+
+    return this._httpClient.post<Transaction[]>(this._transactionUrl + `/filtered${urlParameters}`, filter);
   }
 
   public UpdateTransaction(id: string | undefined, transaction: Transaction) {
@@ -44,7 +58,7 @@ export class FinanceTrackerApiService {
       )
   }
 
-  public DeleteTransaction(id:string | undefined, transactionToDelete: Transaction) {
+  public DeleteTransaction(id: string | undefined, transactionToDelete: Transaction) {
     return this._httpClient.delete<Transaction>(this._transactionUrl + `/${id}`)
       .pipe(
         catchError(this.HandleError)
@@ -55,13 +69,13 @@ export class FinanceTrackerApiService {
   //#region budgets
   public CreateBudget(newBudget: Budget) {
     return this._httpClient.post<Budget>(this._budgetUrl, newBudget)
-    .pipe(
-      tap((data) => {
-        // Debug message
-        console.log('Data: ' + JSON.stringify(data))
-      }),
-      catchError(this.HandleError)
-    );
+      .pipe(
+        tap((data) => {
+          // Debug message
+          console.log('Data: ' + JSON.stringify(data))
+        }),
+        catchError(this.HandleError)
+      );
   }
 
   public ReadBudgets() {
@@ -76,7 +90,7 @@ export class FinanceTrackerApiService {
       )
   }
 
-  public DeleteBudget(id:string | undefined, budgetToDelete: Budget) {
+  public DeleteBudget(id: string | undefined, budgetToDelete: Budget) {
     let uri = `${this._budgetUrl}/${id}`
     return this._httpClient.delete<Budget>(uri)
       .pipe(
