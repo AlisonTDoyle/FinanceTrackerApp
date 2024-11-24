@@ -3,13 +3,17 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { Budget } from '../../interfaces/budget';
 import { FinanceTrackerApiService } from '../../services/finance-tracker-api/finance-tracker-api.service';
 import { BudgetInfoComponent } from "../../components/budgets-dashboard/budget-info/budget-info.component";
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { BudgetManipulationFormComponent } from '../../components/budgets-dashboard/budget-manipulation-form/budget-manipulation-form.component';
 
 @Component({
   selector: 'app-budgets-dashboard',
   standalone: true,
   imports: [
     MatExpansionModule,
-    BudgetInfoComponent
+    BudgetInfoComponent,
+    MatSidenavModule,
+    BudgetManipulationFormComponent
 ],
   templateUrl: './budgets-dashboard.component.html',
   styleUrl: './budgets-dashboard.component.scss'

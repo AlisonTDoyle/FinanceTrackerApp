@@ -1,23 +1,31 @@
-<mat-expansion-panel>
-    <mat-expansion-panel-header>
-        <mat-panel-title> Budget for {{budget?.start_date| date: 'MMM YYYY'}} </mat-panel-title>
-        <mat-panel-description>
-           Total: €{{budget?.total}}
-        </mat-panel-description>
-    </mat-expansion-panel-header>
-    <table>
-        <thead >
-            <th>Category</th>
-            <th>Allocated Category</th>
-        </thead>
-        <tbody>
-            <!-- @for (allocation of budget?.allocations; track allocation) {
-                <tr>
-                    <td>{{allocation.name}}</td>
-                    <td>€{{allocation.allocated_amount}}</td>
-                </tr>
-            } -->
-        </tbody>
-    </table>
-      
-</mat-expansion-panel>
+<mat-card class="mb-3">
+    <mat-card-header>
+        <mat-card-title>
+            Budget for {{budget?.start_date | date: 'MMM YYYY'}}
+        </mat-card-title>
+        <mat-card-subtitle>
+            Total: €{{budget?.total}}
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <hr>
+        <table>
+            <tr>
+                <th mat-sort-header="name">Category</th>
+                <th mat-sort-header="calories">Allocation</th>
+            </tr>
+
+            @for (allocation of budget?.allocations; track allocation) {
+            <tr>
+                <td>{{allocation.category}}</td>
+                <td>€{{allocation.allocated_amount}}</td>
+            </tr>
+            }
+        </table>
+        <hr>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button (click)="EditBudget(budget)">Edit</button>
+        <button mat-button (click)="DeleteBudget(budget)">Delete</button>
+    </mat-card-actions>
+</mat-card>

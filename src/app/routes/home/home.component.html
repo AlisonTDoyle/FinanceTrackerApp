@@ -1,5 +1,5 @@
 <mat-drawer-container>
-    <mat-drawer #drawer style="width: 28rem;" position="end">
+    <mat-drawer #drawer style="width: 28rem;" class="position-fixed h-100" position="end">
         <div style="padding: 2rem;">
             <app-transaction-manipulation-form [existingTransaction]="selectedTransaction" (manipulationSubmitted)="FetchTransaction()"></app-transaction-manipulation-form>
         </div>
