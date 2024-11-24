@@ -5,6 +5,8 @@ import { FinanceTrackerApiService } from '../../services/finance-tracker-api/fin
 import { BudgetInfoComponent } from "../../components/budgets-dashboard/budget-info/budget-info.component";
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BudgetManipulationFormComponent } from '../../components/budgets-dashboard/budget-manipulation-form/budget-manipulation-form.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-budgets-dashboard',
@@ -13,7 +15,9 @@ import { BudgetManipulationFormComponent } from '../../components/budgets-dashbo
     MatExpansionModule,
     BudgetInfoComponent,
     MatSidenavModule,
-    BudgetManipulationFormComponent
+    BudgetManipulationFormComponent,
+    MatIconModule,
+    MatButtonModule
 ],
   templateUrl: './budgets-dashboard.component.html',
   styleUrl: './budgets-dashboard.component.scss'

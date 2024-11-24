@@ -92,8 +92,7 @@ export class BudgetManipulationFormComponent {
     let budget:Budget = {
       allocations: form.value.allocations,
       start_date: form.value.start_date,
-      end_date: form.value.end_date,
-      total: total
+      end_date: form.value.end_date
     }
 
     this._financeTrackerApi.CreateBudget(budget).subscribe(() => {

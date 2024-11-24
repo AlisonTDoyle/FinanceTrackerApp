@@ -50,39 +50,6 @@ export class FinanceTrackerApiService {
   }
   //#endregion
 
-  //#region categories
-  public CreateCategory(newCategory: Category) {
-    return this._httpClient.post<Category>(this._categoryUrl, newCategory)
-      .pipe(
-        catchError(this.HandleError)
-      );
-  }
-
-  public ReadCategories() {
-    return this._httpClient.get<Category[]>(this._categoryUrl);
-  }
-
-  public ReadCategoryById(id:string) {
-    return this._httpClient.get<Category>(this._categoryUrl + "/id");
-  }
-
-  public UpdateCategory(id: string, category: Category) {
-    let requestUri = `${this._categoryUrl}/${id}`
-    return this._httpClient.put<Transaction>(requestUri, category)
-      .pipe(
-        catchError(this.HandleError)
-      )
-  }
-
-  public DeleteCategory(id:string, categoryToDelete: Category) {
-    let uri = `${this._categoryUrl}/${id}`
-    return this._httpClient.delete<Category>(uri)
-      .pipe(
-        catchError(this.HandleError)
-      )
-  }
-  //#endregion
-
   //#region budgets
   public CreateBudget(newBudget: Budget) {
     return this._httpClient.post<Budget>(this._budgetUrl, newBudget)
@@ -96,7 +63,7 @@ export class FinanceTrackerApiService {
   }
 
   public ReadBudgets() {
-    return this._httpClient.get<Budget[]>(this._budgetUrl);
+    return this._httpClient.get<Budget[]>(this._budgetUrl)
   }
 
   public UpdateBudget(id: string | undefined, budget: Budget) {

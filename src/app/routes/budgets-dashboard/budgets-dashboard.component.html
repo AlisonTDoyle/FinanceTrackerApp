@@ -1,4 +1,4 @@
-<mat-drawer-container>
+<mat-drawer-container class="h-100">
     <mat-drawer #drawer style="width: 28rem; height: 57rem;" class="position-fixed h-100" position="end">
         <div style="padding: 2rem;">
             <app-budget-manipulation-form (closeDrawer)="drawer.toggle()"></app-budget-manipulation-form>
@@ -7,6 +7,7 @@
     <mat-drawer-content>
         <div class="container">
             <h1>Budgets</h1>
+            <button mat-fab extended class="mb-2" (click)="drawer.toggle()"><mat-icon>edit</mat-icon> Create New Budget</button>
             <mat-accordion>
                 @for (budget of budgets; track budget) {
                     <app-budget-info [budget]="budget" (editBudgetEvent)="drawer.toggle()"></app-budget-info>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, output, Output, SimpleChanges } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -16,6 +16,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Categories } from '../../../enums/categories';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-transaction-manipulation-form',
@@ -28,7 +29,8 @@ import { Categories } from '../../../enums/categories';
     MatButtonModule,
     MatInputModule,
     MatDatepickerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatIconModule
   ],
   templateUrl: './transaction-manipulation-form.component.html',
   styleUrl: './transaction-manipulation-form.component.scss'
@@ -37,6 +39,7 @@ export class TransactionManipulationFormComponent {
   // Inputs and outputs
   @Input() existingTransaction: Transaction | null = null;
   @Output() manipulationSubmitted = new EventEmitter();
+  @Output() closeDrawer = new EventEmitter();
 
   // Properties
   protected categories: Category[] = []
