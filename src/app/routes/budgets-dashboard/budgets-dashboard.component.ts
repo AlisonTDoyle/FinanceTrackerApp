@@ -48,4 +48,10 @@ export class BudgetsDashboardComponent implements OnInit {
   protected UpdateSelectedBudget(budget :Budget|null):void {
     this.selectedBudget = budget;
   }
+
+  protected DeleteBudget(budget:Budget):void {
+    this._financeTrackerApi.DeleteBudget(budget._id, budget).subscribe(() => {
+      this.FetchBudgets();
+    })
+  }
 }
