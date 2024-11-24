@@ -62,8 +62,8 @@
     <mat-form-field appearance="outline" style="width: 100%;">
         <mat-label>Category</mat-label>
         <mat-select formControlName="category">
-            @for (category of categories; track category;) {
-            <mat-option [value]="category._id">{{category.name}}</mat-option>
+            @for (category of categoryKeys; track category;) {
+            <mat-option [value]="category">{{category}}</mat-option>
             }
         </mat-select>
         @if (category?.hasError('required')) {

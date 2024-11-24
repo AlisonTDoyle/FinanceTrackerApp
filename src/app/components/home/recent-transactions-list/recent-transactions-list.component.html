@@ -1,12 +1,24 @@
 <h2>Recent Transactions</h2>
-<button mat-fab extended (click)="RecordNewTransaction()" class="mb-2"><mat-icon>edit</mat-icon>Record Transaction</button>
+<button mat-fab extended (click)="RecordNewTransaction()" class="mb-2"><mat-icon>edit</mat-icon>Record
+    Transaction</button>
 <ul class="hidden-bullet-list">
     @for (transaction of transactions; track $index; let i = $index;) {
     <li>
-        <mat-card appearance="outlined">
+        <mat-card>
             <mat-card-header>
-                <mat-card-title>{{transaction.name}}</mat-card-title>
-                <mat-card-subtitle>{{transaction.date}}</mat-card-subtitle>
+                <mat-card-title>
+                    <div class="row">
+                        {{transaction.name}}
+                    </div>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    @if (transaction.type == "Incoming" || transaction.type == "In") {
+                    + €{{transaction.price}}
+                    }
+                    @else {
+                        - €{{transaction.price}}
+                    }
+                </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
                 {{transaction.description}}

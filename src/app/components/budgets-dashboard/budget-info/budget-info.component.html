@@ -1,0 +1,23 @@
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title> Budget for {{budget?.start_date| date: 'MMM YYYY'}} </mat-panel-title>
+        <mat-panel-description>
+           Total: €{{budget?.total}}
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <table>
+        <thead >
+            <th>Category</th>
+            <th>Allocated Category</th>
+        </thead>
+        <tbody>
+            <!-- @for (allocation of budget?.allocations; track allocation) {
+                <tr>
+                    <td>{{allocation.name}}</td>
+                    <td>€{{allocation.allocated_amount}}</td>
+                </tr>
+            } -->
+        </tbody>
+    </table>
+      
+</mat-expansion-panel>

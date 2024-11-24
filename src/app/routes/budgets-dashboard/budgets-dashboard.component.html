@@ -1,1 +1,8 @@
-<p>budgets-dashboard works!</p>
+<div class="container">
+    <h1>Budgets</h1>
+    <mat-accordion>
+        @for (budget of budgets; track budget) {
+            <app-budget-info [budget]="budget"></app-budget-info>
+        }
+    </mat-accordion>
+</div>

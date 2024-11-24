@@ -1,9 +1,11 @@
+import { Categories } from "../enums/categories";
+
 export interface Transaction {
-    id?:string;
+    _id?:string;
     user?:string;
     name:string;
     description:string;
-    category?:string;
+    category?:Categories;
     date:Date;
     price:number;
     type:string;

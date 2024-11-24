@@ -1,28 +1,27 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule} from '@angular/material/input';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatSelectModule} from '@angular/material/select';
-import { Transaction, TransactionType } from '../../../interfaces/transaction';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { Transaction } from '../../../interfaces/transaction';
 import { CommonModule } from '@angular/common';
 import { FinanceTrackerApiService } from '../../../services/finance-tracker-api/finance-tracker-api.service';
 import { Category } from '../../../interfaces/category';
 import {
-  FormControl,
   FormGroup,
   ReactiveFormsModule,
   FormsModule,
   FormBuilder,
-  FormArray,
   Validators,
 } from '@angular/forms';
+import { Categories } from '../../../enums/categories';
 
 @Component({
   selector: 'app-transaction-manipulation-form',
   standalone: true,
   imports: [
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule,
     CommonModule,
     MatFormFieldModule,
@@ -36,41 +35,50 @@ import {
 })
 export class TransactionManipulationFormComponent {
   // Inputs and outputs
-  @Input() existingTransaction:Transaction | null= null;
-  
+  @Input() existingTransaction: Transaction | null = null;
+  @Output() manipulationSubmitted = new EventEmitter();
+
   // Properties
-  protected categories:Category[] = []
-  protected formTile:string = "";
-  protected submitButtonText:string = "";
-  protected transactionTypes:string[] = [
+  protected categories: Category[] = []
+  protected formTile: string = "";
+  protected submitButtonText: string = "";
+  protected catgories = Categories;
+  protected transactionTypes: string[] = [
     "Outgoing",
     "Incoming"
   ];
-  protected transactionForm:FormGroup =  new FormGroup({});
+  protected transactionForm: FormGroup = new FormGroup({});
 
   // Constructor
-  constructor(private _financeTrackerApi:FinanceTrackerApiService, private _formBuilder:FormBuilder) {
+  constructor(private _financeTrackerApi: FinanceTrackerApiService, private _formBuilder: FormBuilder) {
     // Select appropriate form title
     if (this.existingTransaction == null) {
       this.formTile = "New Transaction";
       this.submitButtonText = "Create Transaction";
+
+      // Set up form
+      this.transactionForm = _formBuilder.group({
+        name: ["", [Validators.required, Validators.minLength(3)]],
+        date: ["", [Validators.required]],
+        type: ["", [Validators.minLength(2), Validators.required]],
+        price: ["", [Validators.min(0), Validators.required]],
+        description: ["", [Validators.minLength(0), Validators.maxLength(150)]],
+        category: ["", [Validators.required]]
+      });
     } else {
       this.formTile = "Edit Transaction";
       this.submitButtonText = "Update Transaction";
+
+      // Set up form
+      this.transactionForm = _formBuilder.group({
+        name: [this.existingTransaction?.name, [Validators.required, Validators.minLength(3)]],
+        date: [this.existingTransaction?.date, [Validators.required]],
+        type: [this.existingTransaction?.type, [Validators.minLength(2), Validators.required]],
+        price: [this.existingTransaction?.price, [Validators.min(0), Validators.required]],
+        description: [this.existingTransaction?.description, [Validators.minLength(0), Validators.maxLength(150)]],
+        category: [this.existingTransaction?.category,[Validators.required]]
+      });
     }
-
-    // Fetch categories
-    this.FetchCategories();
-
-    // Set up form
-    this.transactionForm = _formBuilder.group({
-      name: [this.existingTransaction?.name, [Validators.required, Validators.minLength(3)]],
-      date: [this.existingTransaction?.date, [Validators.required]],
-      type: [this.existingTransaction?.type, [Validators.minLength(2), Validators.required]],
-      price: [this.existingTransaction?.price, [Validators.min(0), Validators.required]],
-      description: [this.existingTransaction?.description, [Validators.minLength(0), Validators.maxLength(150)]],
-      category: [this.existingTransaction?.category,[Validators.required]]
-    });
   }
 
   // Event listeners
@@ -100,15 +108,8 @@ export class TransactionManipulationFormComponent {
   }
 
   // Methods
-  protected FetchCategories():void {
-    this._financeTrackerApi.ReadCategories().subscribe(returnedCategories => {
-      this.categories = returnedCategories
-      console.log(this.categories);
-    });
-  }
-
-  protected CreateTransaction(form:FormGroup):void {
-    let newTransaction:Transaction = {
+  protected CreateTransaction(form: FormGroup): void {
+    let newTransaction: Transaction = {
       name: form.value.name,
       date: form.value.date,
       type: form.value.type,
@@ -117,13 +118,13 @@ export class TransactionManipulationFormComponent {
       price: form.value.price
     };
 
-    console.table(newTransaction)
-
-    this._financeTrackerApi.CreateTransaction(newTransaction);
+    this._financeTrackerApi.CreateTransaction(newTransaction).subscribe(() => {
+      this.manipulationSubmitted.emit();
+    });
   }
 
-  protected UpdateTransaction(form:FormGroup):void {
-    let updatedTransaction:Transaction = {
+  protected UpdateTransaction(form: FormGroup): void {
+    let updatedTransaction: Transaction = {
       name: form.value.name,
       date: form.value.date,
       type: form.value.type,
@@ -134,31 +135,37 @@ export class TransactionManipulationFormComponent {
 
     console.table(updatedTransaction)
 
-    this._financeTrackerApi.UpdateTransaction(this.existingTransaction?.id, updatedTransaction);
+    this._financeTrackerApi.UpdateTransaction(this.existingTransaction?._id, updatedTransaction).subscribe(() => {
+      this.manipulationSubmitted.emit();
+    });
   }
 
   // Form feilds
   get name() {
     return this.transactionForm.get('name');
   }
-  
+
   get date() {
     return this.transactionForm.get('date');
   }
-  
+
   get type() {
     return this.transactionForm.get('type');
   }
-  
+
   get description() {
     return this.transactionForm.get('description');
   }
-  
+
   get category() {
     return this.transactionForm.get('category');
   }
-  
+
   get price() {
     return this.transactionForm.get('price');
+  }
+
+  get categoryKeys(): string[] {
+    return Object.values(Categories); // Use Object.keys(UserRole) for numeric enums
   }
 }

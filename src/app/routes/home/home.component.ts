@@ -1,11 +1,12 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FinanceTrackerApiService } from '../../services/finance-tracker-api/finance-tracker-api.service';
 import { Transaction } from '../../interfaces/transaction';
 import { CommonModule } from '@angular/common';
 import { TransactionManipulationFormComponent } from '../../components/home/transaction-manipulation-form/transaction-manipulation-form.component';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { RecentTransactionsListComponent } from '../../components/home/recent-transactions-list/recent-transactions-list.component';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { SpendingOverMonthComponent } from '../../components/home/spending-over-month/spending-over-month.component';
 
 @Component({
   selector: 'app-home',
@@ -15,44 +16,43 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     TransactionManipulationFormComponent,
     RecentTransactionsListComponent,
     MatGridListModule,
-    MatSidenavModule
-],
+    MatSidenavModule,
+    SpendingOverMonthComponent
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
   // Properties
   protected transactions: Transaction[] = [];
-  protected columns:number = 2;
-  protected rowHeight:number = 0;
-  protected selectedTransaction:Transaction | null = null;
+  protected columns: number = 2;
+  protected rowHeight: number = 0;
+  protected selectedTransaction: Transaction | null = null;
 
   // Constructors
-  public constructor() {
+  public constructor(private _financeTrackerApi: FinanceTrackerApiService) {
 
   }
 
   // Event listeners
   ngOnInit(): void {
-    this.GetSutibleColumnsForScreenSize(window.innerWidth);
-    this.rowHeight = window.innerHeight - 200;
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.GetSutibleColumnsForScreenSize(window.innerWidth);
+    this.FetchTransaction();
   }
 
   // Methods
-  private GetSutibleColumnsForScreenSize(screenWidth :number) {
-    if (screenWidth < 800) {
-      this.columns = 1
-    } else {
-      this.columns = 2
-    }
+  protected UpdateSelectedTransaction(transaction: Transaction | null): void {
+    this.selectedTransaction = transaction;
   }
 
-  protected UpdateSelectedTransaction(transaction:Transaction | null):void {
-    this.selectedTransaction = transaction;
+  protected DeleteTransaction(transaction: Transaction): void {
+    this._financeTrackerApi.DeleteTransaction(transaction._id, transaction).subscribe(() => {
+      this.FetchTransaction();
+    });
+  }
+
+  protected FetchTransaction(): void {
+    this._financeTrackerApi.ReadTransactions().subscribe(transactions => {
+      this.transactions = transactions
+    });
   }
 }
