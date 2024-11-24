@@ -5,6 +5,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FinanceTrackerApiService } from '../../../services/finance-tracker-api/finance-tracker-api.service';
+import { MatTableModule } from '@angular/material/table';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-recent-transactions-list',
@@ -13,13 +15,16 @@ import { FinanceTrackerApiService } from '../../../services/finance-tracker-api/
     MatCardModule,
     MatChipsModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule,
+    CommonModule
   ],
   templateUrl: './recent-transactions-list.component.html',
   styleUrl: './recent-transactions-list.component.scss'
 })
 export class RecentTransactionsListComponent {
   // Properties
+  protected displayedColumns = ['name', 'cost', 'date', 'category']
   
   // Inputs and outputs
   @Input() transactions:Transaction[] = []
