@@ -7,6 +7,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { RecentTransactionsListComponent } from '../../components/home/recent-transactions-list/recent-transactions-list.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SpendingOverMonthComponent } from '../../components/home/spending-over-month/spending-over-month.component';
+import { MatCardModule } from '@angular/material/card';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +19,8 @@ import { SpendingOverMonthComponent } from '../../components/home/spending-over-
     RecentTransactionsListComponent,
     MatGridListModule,
     MatSidenavModule,
-    SpendingOverMonthComponent
+    SpendingOverMonthComponent,
+    MatCardModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -28,6 +31,9 @@ export class HomeComponent implements OnInit {
   protected columns: number = 2;
   protected rowHeight: number = 0;
   protected selectedTransaction: Transaction | null = null;
+  protected currentPage = 1;
+  protected pageSize = 4;
+  protected totalDocs =0;
 
   // Constructors
   public constructor(private _financeTrackerApi: FinanceTrackerApiService) {
@@ -51,8 +57,16 @@ export class HomeComponent implements OnInit {
   }
 
   protected FetchTransaction(): void {
-    this._financeTrackerApi.ReadTransactionsFiltered({}, false, 8, 1).subscribe(transactions => {
-      this.transactions = transactions
+    this._financeTrackerApi.ReadTransactionsFiltered({}, false, this.pageSize, this.currentPage).subscribe(res => {
+      this.transactions = res.transactions
+      this.totalDocs = res.totalDocs
     });
+  }
+
+  protected PageTurnEvent(pageEvent:PageEvent) :void {
+    this.currentPage = pageEvent.pageIndex +1;
+    this.pageSize = pageEvent.pageSize;
+
+    this.FetchTransaction();
   }
 }

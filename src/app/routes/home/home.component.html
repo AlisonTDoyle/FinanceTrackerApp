@@ -2,6 +2,7 @@
     <mat-drawer #drawer style="width: 28rem;" class="position-fixed h-100" position="end">
         <div style="padding: 2rem;">
             <app-transaction-manipulation-form [existingTransaction]="selectedTransaction" (manipulationSubmitted)="FetchTransaction()" (closeDrawer)="drawer.toggle()"></app-transaction-manipulation-form>
+
         </div>
     </mat-drawer>
     <mat-drawer-content>
@@ -12,7 +13,7 @@
                     <app-spending-over-month></app-spending-over-month>
                 </div>
                 <div class="col-12 col-lg-8">
-                    <app-recent-transactions-list [transactions]="transactions" (transactionDeleteEvent)="DeleteTransaction($event)" (transactionManipulationEvent)="UpdateSelectedTransaction($event); drawer.toggle()"></app-recent-transactions-list>
+                    <app-recent-transactions-list [transactions]="transactions" [totalDocs]="totalDocs" (transactionDeleteEvent)="DeleteTransaction($event)" (transactionManipulationEvent)="UpdateSelectedTransaction($event); drawer.toggle()" (pageTurnEvent)="PageTurnEvent($event)"></app-recent-transactions-list>
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { Transaction } from '../../interfaces/transaction';
 import { Budget } from '../../interfaces/budget';
+import { TransactionResponse } from '../../interfaces/transaction-response';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,11 @@ export class FinanceTrackerApiService {
   }
 
   public ReadTransactions() {
-    return this._httpClient.get<Transaction[]>(this._transactionUrl);
+    return this._httpClient.get<TransactionResponse>(this._transactionUrl).pipe(
+      tap((data) => {
+        return data.transactions
+      })
+    );
   }
 
   public ReadTransactionsFiltered(filter: any, ascending: boolean | null, pageSize: number | null, pageNo: number | null) {
@@ -47,7 +52,7 @@ export class FinanceTrackerApiService {
       urlParameters += `page=${pageNo}&`
     }
 
-    return this._httpClient.post<Transaction[]>(this._transactionUrl + `/filtered${urlParameters}`, filter);
+    return this._httpClient.post<TransactionResponse>(this._transactionUrl + `/filtered${urlParameters}`, filter);
   }
 
   public UpdateTransaction(id: string | undefined, transaction: Transaction) {

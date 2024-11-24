@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FinanceTrackerApiService } from '../../../services/finance-tracker-api/finance-tracker-api.service';
 import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-recent-transactions-list',
@@ -17,7 +18,8 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     MatIconModule,
     MatTableModule,
-    CommonModule
+    CommonModule,
+    MatPaginatorModule
   ],
   templateUrl: './recent-transactions-list.component.html',
   styleUrl: './recent-transactions-list.component.scss'
@@ -25,10 +27,13 @@ import { CommonModule } from '@angular/common';
 export class RecentTransactionsListComponent implements OnInit{
   // Properties
   protected displayedColumns:string[] = []
-  columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
+  protected columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
+  protected currentPage = 0;
   
   // Inputs and outputs
   @Input() transactions:Transaction[] = []
+  @Input() totalDocs:number = 0;
+  @Output() pageTurnEvent = new EventEmitter<PageEvent>();
   @Output() transactionManipulationEvent = new EventEmitter<Transaction | null>();
   @Output() transactionDeleteEvent = new EventEmitter<Transaction>();
 
@@ -51,12 +56,17 @@ export class RecentTransactionsListComponent implements OnInit{
     this.transactionManipulationEvent.emit(null);
   }
 
-  protected EditTransaction(transaction:Transaction) {
+  protected EditTransaction(transaction:Transaction):void {
     this.transactionManipulationEvent.emit(transaction);
   }
 
-  protected DeleteTransaction(transaction:Transaction) {
+  protected DeleteTransaction(transaction:Transaction):void {
     this.transactionDeleteEvent.emit(transaction);
+  }
+
+  protected HandlePageEvent(pageEvent: PageEvent):void {
+    console.log(pageEvent);
+    this.pageTurnEvent.emit(pageEvent);
   }
 
   private SelectColumnsToDisplay() {
