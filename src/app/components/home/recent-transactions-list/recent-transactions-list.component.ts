@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, HostListener } from '@angular/core';
 import { Transaction, TransactionType } from '../../../interfaces/transaction';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -22,9 +22,9 @@ import { CommonModule } from '@angular/common';
   templateUrl: './recent-transactions-list.component.html',
   styleUrl: './recent-transactions-list.component.scss'
 })
-export class RecentTransactionsListComponent {
+export class RecentTransactionsListComponent implements OnInit{
   // Properties
-  protected displayedColumns = ['name', 'cost', 'date', 'description', 'category']
+  protected displayedColumns:string[] = []
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   
   // Inputs and outputs
@@ -37,6 +37,14 @@ export class RecentTransactionsListComponent {
   }
 
   // Event handler
+  ngOnInit(): void {
+        this.SelectColumnsToDisplay();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.SelectColumnsToDisplay();
+  }
 
   // Methods
   protected RecordNewTransaction() {
@@ -49,5 +57,17 @@ export class RecentTransactionsListComponent {
 
   protected DeleteTransaction(transaction:Transaction) {
     this.transactionDeleteEvent.emit(transaction);
+  }
+
+  private SelectColumnsToDisplay() {
+    let windowWidth:number = window.innerWidth;
+
+      if (windowWidth < 768) {
+        this.displayedColumns = ['name', 'cost', 'date']
+      } else if (windowWidth < 992) {
+        this.displayedColumns = ['name', 'cost', 'date', 'category']
+      } else {
+        this.displayedColumns = ['name', 'cost', 'date', 'description', 'category']
+      }
   }
 }
