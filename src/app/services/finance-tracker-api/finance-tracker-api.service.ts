@@ -2,7 +2,6 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { Transaction } from '../../interfaces/transaction';
-import { Category } from '../../interfaces/category';
 import { Budget } from '../../interfaces/budget';
 
 @Injectable({
@@ -11,7 +10,6 @@ import { Budget } from '../../interfaces/budget';
 export class FinanceTrackerApiService {
   // Properties
   private _transactionUrl: string = "http://localhost:3000/api/v1/transaction";
-  private _categoryUrl: string = "http://localhost:3000/api/v1/category";
   private _budgetUrl:string = "http://localhost:3000/api/v1/budget";
 
   // Constructor

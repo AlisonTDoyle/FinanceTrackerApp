@@ -7,7 +7,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { Transaction } from '../../../interfaces/transaction';
 import { CommonModule } from '@angular/common';
 import { FinanceTrackerApiService } from '../../../services/finance-tracker-api/finance-tracker-api.service';
-import { Category } from '../../../interfaces/category';
 import {
   FormGroup,
   ReactiveFormsModule,
@@ -42,7 +41,6 @@ export class TransactionManipulationFormComponent {
   @Output() closeDrawer = new EventEmitter();
 
   // Properties
-  protected categories: Category[] = []
   protected formTile: string = "";
   protected submitButtonText: string = "";
   protected catgories = Categories;

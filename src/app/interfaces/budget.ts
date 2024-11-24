@@ -1,7 +1,7 @@
 import { Allocation } from "./allocation";
 
 export interface Budget {
-    id?:string;
+    _id?:string;
     user?:string;
     total?:number;
     allocations:Allocation[];
