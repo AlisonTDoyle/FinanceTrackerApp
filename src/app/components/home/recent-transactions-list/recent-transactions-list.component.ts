@@ -24,7 +24,8 @@ import { CommonModule } from '@angular/common';
 })
 export class RecentTransactionsListComponent {
   // Properties
-  protected displayedColumns = ['name', 'cost', 'date', 'category']
+  protected displayedColumns = ['name', 'cost', 'date', 'description', 'category']
+  columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   
   // Inputs and outputs
   @Input() transactions:Transaction[] = []

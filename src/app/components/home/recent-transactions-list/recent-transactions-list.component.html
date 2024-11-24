@@ -1,35 +1,39 @@
-<div class="row">
-    <h2>Transactions</h2>
-    <button mat-fab extended (click)="RecordNewTransaction()" class="mb-2"><mat-icon>edit</mat-icon>Record
-        Transaction</button>
-</div>
+<h2>Transactions</h2>
+<button mat-fab extended (click)="RecordNewTransaction()" class="mb-2"><mat-icon>edit</mat-icon>Record
+    Transaction</button>
 <mat-card class="p-2" style="background-color: white;">
     <table mat-table [dataSource]="transactions" style="background-color: white;">
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let transaction"> {{transaction.name}} </td>
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let transaction"> {{transaction.name}} </td>
         </ng-container>
-    
-        <!-- Weight Column -->
+
+        <!-- Cost Column -->
         <ng-container matColumnDef="cost">
-          <th mat-header-cell *matHeaderCellDef> Cost </th>
-          <td mat-cell *matCellDef="let transaction"> €{{transaction.price}} </td>
+            <th mat-header-cell *matHeaderCellDef> Cost </th>
+            <td mat-cell *matCellDef="let transaction"> €{{transaction.price}} </td>
         </ng-container>
-    
-        <!-- Symbol Column -->
+
+        <!-- Date Column -->
         <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef> Date </th>
-          <td mat-cell *matCellDef="let transaction"> {{transaction.date | date: 'dd MMM YYYY'}} </td>
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let transaction"> {{transaction.date | date: 'dd MMM YYYY'}} </td>
         </ng-container>
-    
-        <!-- Symbol Column -->
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell *matCellDef="let transaction"> {{transaction.description}} </td>
+        </ng-container>
+
+        <!-- Categoryt Column -->
         <ng-container matColumnDef="category">
-          <th mat-header-cell *matHeaderCellDef> Category </th>
-          <td mat-cell *matCellDef="let transaction"> {{transaction.category}} </td>
+            <th mat-header-cell *matHeaderCellDef> Category </th>
+            <td mat-cell *matCellDef="let transaction"> {{transaction.category}} </td>
         </ng-container>
-    
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+    </table>
 </mat-card>
