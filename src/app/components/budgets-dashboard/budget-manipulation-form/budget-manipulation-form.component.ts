@@ -126,6 +126,15 @@ export class BudgetManipulationFormComponent {
     });
   }
 
+  // Form fields
+  get start_date() {
+    return this.budgetForm.get('start_date');
+  }
+  
+  get end_date() {
+    return this.budgetForm.get('end_date');
+  }
+
   protected get allocations(): FormArray {
     return this.budgetForm.get('allocations') as FormArray;
   }

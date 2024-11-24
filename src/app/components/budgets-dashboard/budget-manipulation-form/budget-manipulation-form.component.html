@@ -7,9 +7,9 @@
         <input matInput [matDatepicker]="start_date_picker" formControlName="start_date">
         <mat-datepicker-toggle matIconSuffix [for]="start_date_picker"></mat-datepicker-toggle>
         <mat-datepicker #start_date_picker></mat-datepicker>
-        <!-- @if (date?.hasError('required')) {
-        <mat-error>Date is required </mat-error>
-        } -->
+        @if (start_date?.hasError('required')) {
+        <mat-error>Start date is required </mat-error>
+        }
     </mat-form-field>
     <!-- End date field -->
     <mat-form-field appearance="outline" style="width: 100%;">
@@ -17,9 +17,9 @@
         <input matInput [matDatepicker]="end_date_picker" formControlName="end_date">
         <mat-datepicker-toggle matIconSuffix [for]="end_date_picker"></mat-datepicker-toggle>
         <mat-datepicker #end_date_picker></mat-datepicker>
-        <!-- @if (date?.hasError('required')) {
-        <mat-error>Date is required </mat-error>
-        } -->
+        @if (end_date?.hasError('required')) {
+        <mat-error>End date is required </mat-error>
+        }
     </mat-form-field>
     <!-- Add allocation form group -->
     <div formArrayName="allocations">
