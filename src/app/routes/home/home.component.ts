@@ -9,6 +9,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { SpendingOverMonthComponent } from '../../components/home/spending-over-month/spending-over-month.component';
 import { MatCardModule } from '@angular/material/card';
 import { PageEvent } from '@angular/material/paginator';
+import { SpendingCategoryBreakdownComponent } from '../../components/home/spending-category-breakdown/spending-category-breakdown.component';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,8 @@ import { PageEvent } from '@angular/material/paginator';
     MatGridListModule,
     MatSidenavModule,
     SpendingOverMonthComponent,
-    MatCardModule
+    MatCardModule,
+    SpendingCategoryBreakdownComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -32,7 +34,7 @@ export class HomeComponent implements OnInit {
   protected rowHeight: number = 0;
   protected selectedTransaction: Transaction | null = null;
   protected currentPage = 1;
-  protected pageSize = 4;
+  protected pageSize = 8;
   protected totalDocs =0;
 
   // Constructors
