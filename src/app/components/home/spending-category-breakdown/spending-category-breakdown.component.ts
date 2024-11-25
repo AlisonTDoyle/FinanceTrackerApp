@@ -40,7 +40,7 @@ export class SpendingCategoryBreakdownComponent {
       }
     }
 
-    this._financeTrackerApi.ReadTransactionsFiltered(filter, true, null, null).subscribe((res) => {
+    this._financeTrackerApi.ReadTransactionsFiltered(filter, null, null, null).subscribe((res) => {
       res.transactions.forEach(transaction => {
         switch (transaction.category) {
           case "Housing":
@@ -50,19 +50,19 @@ export class SpendingCategoryBreakdownComponent {
             this.categoryPopulation[1]++
             break;
           case "Food":
-            break;
-          case "Health & Wellness":
             this.categoryPopulation[2]++
             break;
-          case "Entertainment & Recreation":
+          case "Health & Wellness":
             this.categoryPopulation[3]++
             break;
-          case "Misc":
+          case "Entertainment & Recreation":
             this.categoryPopulation[4]++
+            break;
+          case "Misc":
+            this.categoryPopulation[5]++
             break;
         }
       });
-      console.log(this.categoryPopulation);
       this.CreateChart()
     })
   }

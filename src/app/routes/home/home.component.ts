@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit {
   }
 
   protected FetchTransaction(): void {
-    this._financeTrackerApi.ReadTransactionsFiltered({}, false, this.pageSize, this.currentPage).subscribe(res => {
+    this._financeTrackerApi.ReadTransactionsFiltered({}, null, this.pageSize, this.currentPage).subscribe(res => {
       this.transactions = res.transactions
       this.totalDocs = res.totalDocs
     });

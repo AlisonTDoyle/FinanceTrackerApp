@@ -4,3 +4,4 @@
 - [Chart.js docs](https://www.chartjs.org/docs/latest/getting-started/)
 - [How to add charts in Angular application](https://www.youtube.com/watch?v=IyVdmvOVXlU&t=121s)
 - [Pagination with Angular Material](https://www.youtube.com/watch?v=sUpYvx-2zxI)
+- [Chart.js documentation](https://www.chartjs.org/docs/latest/)
