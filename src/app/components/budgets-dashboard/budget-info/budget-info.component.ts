@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
+import { Allocation } from '../../../interfaces/allocation';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-budget-info',
@@ -15,7 +17,8 @@ import { MatButton } from '@angular/material/button';
     MatCardModule,
     CommonModule,
     MatTableModule,
-    MatButton
+    MatButton,
+    MatIconModule
   ],
   templateUrl: './budget-info.component.html',
   styleUrl: './budget-info.component.scss'
@@ -28,6 +31,8 @@ export class BudgetInfoComponent implements OnInit {
 
   // Properties
   protected budgetTotal: number = 0;
+  protected allocations:Allocation[] = [];
+  protected displayedColumns:string[] = ['category', "allocated_amount"]
 
   // Constructor
   constructor(private _financeTrackerApi: FinanceTrackerApiService) {
@@ -37,6 +42,7 @@ export class BudgetInfoComponent implements OnInit {
   ngOnInit(): void {
     if (this.budget?.allocations != undefined) {
       for (let i = 0; i < this.budget?.allocations.length; i++) {
+        this.allocations.push(this.budget.allocations[i]);
         this.budgetTotal += this.budget.allocations[i].allocated_amount
       }
     }

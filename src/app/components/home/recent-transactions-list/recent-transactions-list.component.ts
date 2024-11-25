@@ -28,7 +28,7 @@ export class RecentTransactionsListComponent implements OnInit{
   // Properties
   protected displayedColumns:string[] = []
   protected columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
-  protected currentPage = 0;
+  protected currentPage:number = 0;
   
   // Inputs and outputs
   @Input() transactions:Transaction[] = []
@@ -73,11 +73,11 @@ export class RecentTransactionsListComponent implements OnInit{
     let windowWidth:number = window.innerWidth;
 
       if (windowWidth < 768) {
-        this.displayedColumns = ['name', 'cost', 'date']
+        this.displayedColumns = ['name', 'cost', 'date', 'action']
       } else if (windowWidth < 992) {
-        this.displayedColumns = ['name', 'cost', 'date', 'category']
+        this.displayedColumns = ['name', 'cost', 'date', 'category', 'action']
       } else {
-        this.displayedColumns = ['name', 'cost', 'date', 'description', 'category']
+        this.displayedColumns = ['name', 'cost', 'date', 'description', 'category', 'action']
       }
   }
 }

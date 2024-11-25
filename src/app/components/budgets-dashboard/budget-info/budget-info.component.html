@@ -1,7 +1,7 @@
 <mat-card class="mb-3" style="background-color: white;">
     <mat-card-header>
         <mat-card-title>
-            {{budget?.start_date | date: 'dd MMM YYYY'}} - {{budget?.end_date | date: 'dd MMM YYYY'}} 
+            {{budget?.start_date | date: 'dd MMM YYYY'}} - {{budget?.end_date | date: 'dd MMM YYYY'}}
         </mat-card-title>
         <mat-card-subtitle>
             Total: €{{budgetTotal}}
@@ -9,18 +9,20 @@
     </mat-card-header>
     <mat-card-content>
         <hr>
-        <table>
-            <tr>
-                <th mat-sort-header="name">Category</th>
-                <th mat-sort-header="calories">Allocation</th>
-            </tr>
-
-            @for (allocation of budget?.allocations; track allocation) {
-            <tr>
-                <td>{{allocation.category}}</td>
-                <td>€{{allocation.allocated_amount}}</td>
-            </tr>
-            }
+        <table mat-table [dataSource]="allocations" style="background-color: white;">
+            <!-- Category Column -->
+            <ng-container matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef> Category </th>
+                <td mat-cell *matCellDef="let budget"> {{budget.category}} </td>
+            </ng-container>
+    
+            <!-- Allocated amount Column -->
+            <ng-container matColumnDef="allocated_amount">
+                <th mat-header-cell *matHeaderCellDef> Allocated Amount </th>
+                <td mat-cell *matCellDef="let budget"> €{{budget.allocated_amount}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
         <hr>
     </mat-card-content>
