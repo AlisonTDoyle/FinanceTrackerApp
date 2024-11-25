@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Categories } from '../../../enums/categories';
 import { FinanceTrackerApiService } from '../../../services/finance-tracker-api/finance-tracker-api.service';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { Allocation } from '../../../interfaces/allocation';
 
 @Component({
   selector: 'app-budget-manipulation-form',
@@ -39,9 +40,6 @@ export class BudgetManipulationFormComponent {
 
   // Constructor
   constructor(private _formBuilder: FormBuilder, private _financeTrackerApi: FinanceTrackerApiService) {
-    console.table(this.budget)
-
-    
   }
 
   // Event listeners
@@ -75,10 +73,10 @@ export class BudgetManipulationFormComponent {
         start_date: this.budget.start_date,
         end_date: this.budget.end_date
       });
-  
+
       // Reset allocations forms
       this.budgetForm.setControl('allocations', this._formBuilder.array([]));
-  
+
       // Create allocation for for each allocation
       this.budget.allocations.forEach(allocation => {
         this.allocations.push(this._formBuilder.group({
@@ -118,19 +116,22 @@ export class BudgetManipulationFormComponent {
       end_date: form.value.end_date
     }
 
-    console.table(budget);
-    console.table(budget.allocations)
-
     this._financeTrackerApi.UpdateBudget(this.budget?._id, budget).subscribe(() => {
       this.manipulationSubmitted.emit();
     });
+  }
+
+  protected RemoveAllocation(i:number): void {
+    console.log('Removing index:', i);
+    console.table(this.allocations.at(i))
+    this.allocations.removeAt(i);
   }
 
   // Form fields
   get start_date() {
     return this.budgetForm.get('start_date');
   }
-  
+
   get end_date() {
     return this.budgetForm.get('end_date');
   }

@@ -46,7 +46,7 @@
                 <span matTextPrefix>€ &nbsp;</span>
                 <input  matInput id="amount-{{ i }}" type="number" formControlName="allocated_amount">
             </mat-form-field>
-            <button mat-flat-button class="text-bg-danger"><mat-icon>delete</mat-icon>Remove</button>
+            <button mat-flat-button class="text-bg-danger" (click)="RemoveAllocation(i)" type="button"><mat-icon>delete</mat-icon>Remove</button>
         </div>
         }
     </div>
