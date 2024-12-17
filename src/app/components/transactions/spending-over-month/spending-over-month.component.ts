@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FinanceTrackerApiService } from '../../../services/finance-tracker-api/finance-tracker-api.service';
 import { Transaction } from '../../../interfaces/transaction';
-import { Chart, registerables } from './../../../../../node_modules/chart.js';
+import { Chart, registerables } from 'chart.js';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({

@@ -1,21 +1,38 @@
-<mat-drawer-container class="h-100">
-    <mat-drawer #drawer style="width: 28rem;" class="position-fixed h-100" position="end">
-        <div style="padding: 2rem;">
-            <app-transaction-manipulation-form [existingTransaction]="selectedTransaction" (manipulationSubmitted)="FetchTransaction()" (closeDrawer)="drawer.toggle()"></app-transaction-manipulation-form>
+<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary">
+    <div class="col-md-6 p-lg-5 mx-auto my-5">
+        <h1 class="display-3 fw-bold">Finance Tracker</h1>
+        <h3 class="fw-normal text-muted mb-3">Take control of your money, one step at a time</h3>
+        <div class="d-flex gap-3 justify-content-center lead fw-normal">
+            <a mat-flat-button>Get Started</a>
         </div>
-    </mat-drawer>
-    <mat-drawer-content>
-        <div class="container">
-            <h1>Home</h1>
-            <div class="row" style="height: 100%;">
-                <div class="col-12 col-lg-4">
-                    <app-spending-over-month></app-spending-over-month>
-                    <app-spending-category-breakdown></app-spending-category-breakdown>
-                </div>
-                <div class="col-12 col-lg-8">
-                    <app-recent-transactions-list [transactions]="transactions" [totalDocs]="totalDocs" (transactionDeleteEvent)="DeleteTransaction($event)" (transactionManipulationEvent)="UpdateSelectedTransaction($event); drawer.toggle()" (pageTurnEvent)="PageTurnEvent($event)"></app-recent-transactions-list>
-                </div>
-            </div>
-        </div>
-    </mat-drawer-content>
-</mat-drawer-container>
+    </div>
+    <div class="product-device shadow-sm d-none d-md-block"></div>
+    <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+</div>
+
+<div class="container">
+    <h2 class="display-6">Track, Budget, and Save Like Never Before</h2>
+    <p>
+        Finance Tracker is your personal finance companion, designed to help you take charge of your money and build better financial habits. With our intuitive tools, you can:
+    </p>
+    <ul>
+        <li><b>Create budgets</b> to plan for your goals and stay on track.</li>
+        <li><b>Log and manage transactions</b> effortlessly, like a personal financial diary.</li>
+        <li><b>Gain insights</b> into your spending patterns to uncover new ways to save.</li>
+    </ul>
+    <p>
+        Our app empowers you to simplify your financial life and focus on what matters most—achieving financial freedom.
+    </p>
+    <hr>
+    <h2 class="display-6">About Us</h2>
+    <p>
+        At Finance Tracker, we believe that financial literacy is the foundation of a secure and fulfilling life. That’s
+        why we created an easy-to-use platform for everyone—from students to seasoned professionals—looking to better
+        understand their money.<br><br>
+
+        Founded by a team of financial enthusiasts and tech innovators, Finance Tracker is more than an app; it’s a tool
+        to help you thrive. Our mission is to make financial tracking simple, accessible, and empowering for all.<br><br>
+
+        Start your journey toward smarter spending and better savings today.
+    </p>
+</div>

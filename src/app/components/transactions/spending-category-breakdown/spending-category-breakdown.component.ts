@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Chart, registerables } from './../../../../../node_modules/chart.js';
+import { Chart, registerables } from 'chart.js';
 import { MatCardModule } from '@angular/material/card';
 import { FinanceTrackerApiService } from '../../../services/finance-tracker-api/finance-tracker-api.service.js';
 import { Categories } from '../../../enums/categories.js';
