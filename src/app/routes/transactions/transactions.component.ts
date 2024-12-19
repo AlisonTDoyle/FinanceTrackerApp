@@ -10,6 +10,7 @@ import { SpendingOverMonthComponent } from '../../components/transactions/spendi
 import { MatCardModule } from '@angular/material/card';
 import { PageEvent } from '@angular/material/paginator';
 import { SpendingCategoryBreakdownComponent } from '../../components/transactions/spending-category-breakdown/spending-category-breakdown.component';
+import { AuthService } from '../../services/auth/auth.service';
 
 
 @Component({
@@ -39,13 +40,17 @@ export class TransactionsComponent implements OnInit {
   protected totalDocs =0;
 
   // Constructors
-  public constructor(private _financeTrackerApi: FinanceTrackerApiService) {
+  public constructor(private _financeTrackerApi: FinanceTrackerApiService, private _authService:AuthService) {
 
   }
 
   // Event listeners
   ngOnInit(): void {
     this.FetchTransaction();
+
+    this._authService.supabase.auth.onAuthStateChange((event, session) => {
+      console.info(event, session);
+    })
   }
 
   // Methods

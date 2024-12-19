@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import firebase from 'firebase/compat/app';
+import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -23,12 +24,39 @@ export class AuthComponent {
   protected signInForm: FormGroup = new FormGroup({});
 
   // Constructor
-  constructor(private _formBuilder:FormBuilder) {
+  constructor(private _formBuilder:FormBuilder, private _authService:AuthService, private _router:Router) {
     this.signInForm = _formBuilder.group({
-      email: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required]]
     })
   }
 
+  // Event listeners
+  protected onSubmit():void {
+    this.SignInWithPassword(this.signInForm);
+  }
+
   // Methods
+  protected SignInWithPassword(form:FormGroup) {
+    if ((this.email?.invalid || this.password?.invalid) || this.signInForm.invalid) {
+      // Sign in user
+      this._authService.SignInWithEmailAndPassword(form.value.email, form.value.password).subscribe((res) => {
+        // Check if user was signed in successfully
+        if (res.error) {
+          console.error(res.error)
+        } else {
+          this._router.navigateByUrl('/transactions');
+        }
+      });
+    }
+  }
+
+  // Form fields
+  get email() {
+    return this.signInForm.get('email');
+  }
+  
+  get password() {
+    return this.signInForm.get('password');
+  }
 }
