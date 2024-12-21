@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../../services/auth/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +15,8 @@ import { ActivatedRoute, Router } from '@angular/router';
     ReactiveFormsModule,
     MatButtonModule,
     MatInputModule,
+    RouterLink,
+    RouterLinkActive
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -25,7 +27,7 @@ export class LoginComponent implements OnInit {
   protected returnUrl: string = '';
 
   // Constructor
-  constructor(private _formBuilder: FormBuilder, private _activitedRoute:ActivatedRoute, private _authService: AuthService, private _router: Router) {
+  constructor(private _formBuilder: FormBuilder, private _activitedRoute: ActivatedRoute, private _authService: AuthService, private _router: Router) {
     this.signInForm = _formBuilder.group({
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required]]
@@ -46,17 +48,21 @@ export class LoginComponent implements OnInit {
   protected SignInWithPassword(form: FormGroup) {
     console.info(`Email: ${form.value.email}, Password: ${form.value.password}`);
 
-      // Sign in user
-      this._authService.SignInWithEmailAndPassword(form.value.email, form.value.password).subscribe((res) => {
-        // Check if user was signed in successfully
-        if (res.error) {
-          console.error(res.error)
-        }
-        else {
-          console.info('User signed in successfully');
-          this._router.navigateByUrl(this.returnUrl);
-        }
-      });
+    // Sign in user
+    this._authService.SignInWithEmailAndPassword(form.value.email, form.value.password).subscribe((res) => {
+      // Check if user was signed in successfully
+      if (res.error) {
+        console.error(res.error)
+      }
+      else {
+        console.info('User signed in successfully');
+        this._router.navigateByUrl(this.returnUrl);
+      }
+    });
+  }
+
+  protected NavigateToSignUp(): void {
+    this._router.createUrlTree(['/auth/signup'], { queryParams: { returnUrl: this.returnUrl } })
   }
 
   // Form fields

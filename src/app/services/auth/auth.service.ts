@@ -19,10 +19,15 @@ export class AuthService {
   constructor(private _httpClient: HttpClient) { }
 
   // Methods
-  public SignUpWithEmailAndPassword(email: string, password: string): Observable<any> {
+  public SignUpWithEmailAndPassword(email: string, password: string, username:string): Observable<any> {
     let authPromise = this.supabase.auth.signUp({
       email: email,
-      password: password
+      password: password,
+      options: {
+        data: {
+          username: username
+        }
+      }
     })
 
     return from(authPromise);

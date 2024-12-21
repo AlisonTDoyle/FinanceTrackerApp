@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container text-center" style="width: 32rem;">
     <h1>Sign In</h1>
-    <form [formGroup]="signInForm" (submit)="onSubmit()">
+    <form [formGroup]="signInForm" class="mb-4" (submit)="onSubmit()">
         <div>
             <mat-form-field appearance="outline" class="w-100 mb-2">
                 <mat-label>Email</mat-label>
@@ -26,4 +26,8 @@
 
         <button mat-flat-button class="w-100 mb-3" type="submit">Sign In</button>
     </form>
+    <div class="text-center">
+        <span>No account? No problem! Sign up now!</span><br>
+        <a mat-stroked-button routerLink="/auth/signup" routerLinkActive class="w-100">Sign Up</a>
+    </div>
 </div>

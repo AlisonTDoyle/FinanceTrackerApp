@@ -1,1 +1,56 @@
-<p>signup works!</p>
+<div class="container text-center" style="width: 32rem;">
+    @if (!awaitingConfirmation) {
+    <h1 class="display-4">Sign Up</h1>
+    <form [formGroup]="signUpForm" class="mb-4" (submit)="onSubmit()">
+        <div>
+            <mat-form-field appearance="outline" class="w-100 mb-2">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email">
+                @if (email?.hasError('required') ){
+                <mat-error>Email is required </mat-error>
+                }
+                @else {
+                <mat-error>Invalid email </mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field appearance="outline" class="w-100 mb-2">
+                <mat-label>Username</mat-label>
+                <input matInput formControlName="username">
+                @if (username?.hasError('required') ){
+                <mat-error>Username is required </mat-error>
+                }
+                @else if (username?.hasError('minLength')) {
+                <mat-error>Username must be at least 3 characters long</mat-error>
+                }
+                @else {
+                <mat-error>Invalid username</mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Password</mat-label>
+                <input matInput formControlName="password" type="password">
+                @if (password?.hasError('required') ){
+                <mat-error>Password is required </mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <button mat-flat-button class="w-100 mb-3" type="submit">Sign In</button>
+    </form>
+    <div class="text-center">
+        <span>Already have an account?</span><br>
+        <a mat-stroked-button (click)="NavigateToSignIn()" routerLinkActive class="w-100">Sign In</a>
+    </div>
+    }
+    @else {
+    <h1 class="display-4">Confirm Email</h1>
+    <p class="lead">We have sent you an email with a confirmation link. Please click on the link to confirm your email
+        address.</p>
+    }
+</div>
