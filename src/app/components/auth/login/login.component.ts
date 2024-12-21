@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../../services/auth/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -19,11 +19,13 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  // Properties
   protected signInForm: FormGroup = new FormGroup({});
+  protected returnUrl: string = '';
 
   // Constructor
-  constructor(private _formBuilder: FormBuilder, private _authService: AuthService, private _router: Router) {
+  constructor(private _formBuilder: FormBuilder, private _activitedRoute:ActivatedRoute, private _authService: AuthService, private _router: Router) {
     this.signInForm = _formBuilder.group({
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required]]
@@ -31,6 +33,11 @@ export class LoginComponent {
   }
 
   // Event listeners
+  ngOnInit(): void {
+    // Get return url
+    this.returnUrl = this._activitedRoute.snapshot.queryParams['returnUrl'] || '/';
+  }
+
   protected onSubmit(): void {
     this.SignInWithPassword(this.signInForm);
   }
@@ -44,7 +51,11 @@ export class LoginComponent {
         // Check if user was signed in successfully
         if (res.error) {
           console.error(res.error)
-        } 
+        }
+        else {
+          console.info('User signed in successfully');
+          this._router.navigateByUrl(this.returnUrl);
+        }
       });
   }
 
