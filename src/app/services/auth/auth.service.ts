@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AuthError, AuthResponse, createClient, OAuthResponse } from '@supabase/supabase-js';
+import { AuthError, AuthResponse, createClient, OAuthResponse, UserResponse } from '@supabase/supabase-js';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { from, Observable } from 'rxjs';
+import { BehaviorSubject, from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,8 @@ export class AuthService {
   private _supabaseUrl: string = 'https://hexfuwevpzbgmqqhtltr.supabase.co';
   private _supabaseKey: string = environment.SUPABASE_KEY;
   public supabase = createClient(this._supabaseUrl, this._supabaseKey);
+  private _userLoggedIn = new BehaviorSubject<boolean>(false);
+  public userLoggedIn$ = this._userLoggedIn.asObservable();
 
   // Constructor
   constructor(private _httpClient: HttpClient) { }
@@ -37,6 +39,12 @@ export class AuthService {
 
   public SignOut(): Observable<{ error: AuthError | null; }> {
     let promise = this.supabase.auth.signOut()
+    return from(promise);
+  }
+
+  public GetCurrentUser(): Observable<UserResponse> {
+    let promise:Promise<UserResponse> = this.supabase.auth.getUser();
+    this._userLoggedIn.next(promise == null ? false : true); 
     return from(promise);
   }
 }

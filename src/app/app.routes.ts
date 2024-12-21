@@ -2,7 +2,9 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './routes/home/home.component';
 import { BudgetsDashboardComponent } from './routes/budgets-dashboard/budgets-dashboard.component';
 import { TransactionsComponent } from './routes/transactions/transactions.component';
-import { AuthComponent } from './routes/auth/auth.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { SignupComponent } from './components/auth/signup/signup.component';
+import { authGuard } from './guards/auth/auth.guard';
 
 export const routes: Routes = [
     {
@@ -11,14 +13,20 @@ export const routes: Routes = [
     },
     {
         path: "budgets",
-        component: BudgetsDashboardComponent
+        component: BudgetsDashboardComponent,
+        canActivate: [authGuard]
     },
     {
         path: "transactions",
-        component: TransactionsComponent
+        component: TransactionsComponent,
+        canActivate: [authGuard]
     },
     {
-        path: "auth",
-        component: AuthComponent
+        path: "auth/login",
+        component: LoginComponent
+    },
+    {
+        path: "auth/signup",
+        component: SignupComponent,
     }
 ];
