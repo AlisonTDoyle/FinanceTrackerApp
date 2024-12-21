@@ -37,10 +37,11 @@ export class TransactionsComponent implements OnInit {
   protected selectedTransaction: Transaction | null = null;
   protected currentPage = 1;
   protected pageSize = 8;
-  protected totalDocs =0;
+  protected totalDocs = 0;
+  private _userId: string | undefined = "";
 
   // Constructors
-  public constructor(private _financeTrackerApi: FinanceTrackerApiService) {
+  public constructor(private _financeTrackerApi: FinanceTrackerApiService, private _authService: AuthService) {
 
   }
 
@@ -61,14 +62,22 @@ export class TransactionsComponent implements OnInit {
   }
 
   protected FetchTransaction(): void {
-    this._financeTrackerApi.ReadTransactionsFiltered({}, null, this.pageSize, this.currentPage).subscribe(res => {
-      this.transactions = res.transactions
-      this.totalDocs = res.totalDocs
+    // Get the current user
+    this._authService.GetCurrentUser().subscribe(res => {
+      this._userId = res.data.user?.id;
+      console.log(this._userId);
+
+      // When user is fetched, get the transactions
+
+      this._financeTrackerApi.ReadTransactionsFiltered({}, null, this.pageSize, this.currentPage, this._userId).subscribe(res => {
+        this.transactions = res.transactions
+        this.totalDocs = res.totalDocs
+      });
     });
   }
 
-  protected PageTurnEvent(pageEvent:PageEvent) :void {
-    this.currentPage = pageEvent.pageIndex +1;
+  protected PageTurnEvent(pageEvent: PageEvent): void {
+    this.currentPage = pageEvent.pageIndex + 1;
     this.pageSize = pageEvent.pageSize;
 
     this.FetchTransaction();

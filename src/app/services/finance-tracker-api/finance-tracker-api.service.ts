@@ -39,7 +39,7 @@ export class FinanceTrackerApiService {
     );
   }
 
-  public ReadTransactionsFiltered(filter: any, ascending: boolean | null, pageSize: number | null, pageNo: number | null) {
+  public ReadTransactionsFiltered(filter: any, ascending: boolean | null, pageSize: number | null, pageNo: number | null, userId: string | undefined) {
     let urlParameters = "?";
 
     if (ascending != null) {
@@ -53,6 +53,12 @@ export class FinanceTrackerApiService {
     if (pageNo != null) {
       urlParameters += `page=${pageNo}&`
     }
+
+    if (pageNo != null) {
+      urlParameters += `userId=${userId}&`
+    }
+
+    console.log(urlParameters);
 
     return this._httpClient.post<TransactionResponse>(this._transactionUrl + `/filtered${urlParameters}`, filter);
   }

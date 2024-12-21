@@ -3,6 +3,7 @@ import { FinanceTrackerApiService } from '../../../services/finance-tracker-api/
 import { Transaction } from '../../../interfaces/transaction';
 import { Chart, registerables } from 'chart.js';
 import { MatCardModule } from '@angular/material/card';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-spending-over-month',
@@ -16,17 +17,22 @@ import { MatCardModule } from '@angular/material/card';
 
 export class SpendingOverMonthComponent implements OnInit {
   // Properties
+  private _userId: string|undefined = "";
 
   // Inputs and outputs
   protected transactions: Transaction[] = []
 
   // Constructor
-  constructor(private _financeTrackerApi: FinanceTrackerApiService) {
+  constructor(private _financeTrackerApi: FinanceTrackerApiService, private _authService: AuthService) {
   }
 
   // Event listeners
   ngOnInit(): void {
     Chart.register(...registerables);
+
+    this._authService.GetCurrentUser().subscribe(res => {
+      this._userId = res.data.user?.id;
+    });
     
     let filter = {
       date: {
@@ -34,7 +40,7 @@ export class SpendingOverMonthComponent implements OnInit {
       }
     }
 
-    this._financeTrackerApi.ReadTransactionsFiltered(filter, true, null, null).subscribe((res) => {
+    this._financeTrackerApi.ReadTransactionsFiltered(filter, true, null, null, this._userId).subscribe((res) => {
       this.transactions = res.transactions;
       this.CreateChart()
     })
