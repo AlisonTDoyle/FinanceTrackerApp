@@ -40,17 +40,13 @@ export class TransactionsComponent implements OnInit {
   protected totalDocs =0;
 
   // Constructors
-  public constructor(private _financeTrackerApi: FinanceTrackerApiService, private _authService:AuthService) {
+  public constructor(private _financeTrackerApi: FinanceTrackerApiService) {
 
   }
 
   // Event listeners
   ngOnInit(): void {
     this.FetchTransaction();
-
-    this._authService.supabase.auth.onAuthStateChange((event, session) => {
-      console.info(event, session);
-    })
   }
 
   // Methods

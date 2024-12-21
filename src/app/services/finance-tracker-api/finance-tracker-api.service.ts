@@ -19,6 +19,8 @@ export class FinanceTrackerApiService {
   // Methods
   //#region transactions
   public CreateTransaction(newTransaction: Transaction) {
+    console.log('Creating transaction: ' + JSON.stringify(newTransaction));
+
     return this._httpClient.post<Transaction>(this._transactionUrl, newTransaction)
       .pipe(
         tap((data) => {

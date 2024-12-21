@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, output, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, output, Output, SimpleChanges } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -16,6 +16,7 @@ import {
 } from '@angular/forms';
 import { Categories } from '../../../enums/categories';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-transaction-manipulation-form',
@@ -34,7 +35,7 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
   templateUrl: './transaction-manipulation-form.component.html',
   styleUrl: './transaction-manipulation-form.component.scss'
 })
-export class TransactionManipulationFormComponent {
+export class TransactionManipulationFormComponent implements OnInit {
   // Inputs and outputs
   @Input() existingTransaction: Transaction | null = null;
   @Output() manipulationSubmitted = new EventEmitter();
@@ -49,9 +50,10 @@ export class TransactionManipulationFormComponent {
     "Incoming"
   ];
   protected transactionForm: FormGroup = new FormGroup({});
+  private _userId:string|undefined='';
 
   // Constructor
-  constructor(private _financeTrackerApi: FinanceTrackerApiService, private _formBuilder: FormBuilder) {
+  constructor(private _financeTrackerApi: FinanceTrackerApiService, private _formBuilder: FormBuilder, private _authService: AuthService) {
     // Select appropriate form title
     if (this.existingTransaction == null) {
       this.formTile = "New Transaction";
@@ -83,6 +85,13 @@ export class TransactionManipulationFormComponent {
   }
 
   // Event listeners
+  ngOnInit():void {
+    this._authService.GetCurrentUser().subscribe((user) => {
+      this._userId = user?.data.user?.id;
+      console.log(this._userId);
+    });
+  }
+
   onSubmit() {
     if (this.existingTransaction == null) {
       this.CreateTransaction(this.transactionForm);
@@ -100,7 +109,8 @@ export class TransactionManipulationFormComponent {
         type: this.existingTransaction.type,
         price: this.existingTransaction.price,
         description: this.existingTransaction.description,
-        category: this.existingTransaction.category
+        category: this.existingTransaction.category,
+        user: this._userId
       });
       // Update form metadata like title and button text
       this.formTile = "Edit Transaction";
@@ -116,7 +126,8 @@ export class TransactionManipulationFormComponent {
       type: form.value.type,
       description: form.value.description,
       category: form.value.category,
-      price: form.value.price
+      price: form.value.price,
+      user: this._userId
     };
 
     this._financeTrackerApi.CreateTransaction(newTransaction).subscribe(() => {
@@ -131,7 +142,8 @@ export class TransactionManipulationFormComponent {
       type: form.value.type,
       description: form.value.description,
       category: form.value.category,
-      price: form.value.price
+      price: form.value.price,
+      user: this._userId
     };
 
     console.table(updatedTransaction)
