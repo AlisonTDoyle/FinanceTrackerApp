@@ -131,9 +131,7 @@ export class BudgetManipulationFormComponent implements OnInit {
     });
   }
 
-  protected RemoveAllocation(i:number): void {
-    console.log('Removing index:', i);
-    console.table(this.allocations.at(i))
+  protected RemoveAllocation(i: number): void {
     this.allocations.removeAt(i);
   }
 
