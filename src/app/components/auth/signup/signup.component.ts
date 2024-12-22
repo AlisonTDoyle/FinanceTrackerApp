@@ -18,7 +18,7 @@ import { HeaderComponent } from '../../shared/header/header.component';
     MatInputModule,
     RouterLink,
     RouterLinkActive,
-    HeaderComponent
+    HeaderComponent 
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
