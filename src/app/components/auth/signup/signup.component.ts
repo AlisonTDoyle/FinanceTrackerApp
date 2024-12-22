@@ -6,6 +6,9 @@ import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../../services/auth/auth.service';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { HeaderComponent } from '../../shared/header/header.component';
+import {
+  MatSnackBar,
+} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-signup',
@@ -30,7 +33,7 @@ export class SignupComponent implements OnInit {
   protected awaitingConfirmation: boolean = false;
 
   // Constructor
-  constructor(private _formBuilder: FormBuilder, private _activitedRoute: ActivatedRoute, private _authService: AuthService, private _router: Router) {
+  constructor(private _formBuilder: FormBuilder, private _activitedRoute: ActivatedRoute, private _authService: AuthService, private _router: Router, private _snackBar: MatSnackBar) {
     this.signUpForm = _formBuilder.group({
       email: ["", [Validators.required, Validators.email]],
       username: ["", [Validators.required, Validators.minLength(3)]],
@@ -54,6 +57,7 @@ export class SignupComponent implements OnInit {
       // Check if user was signed in successfully
       if (res.error) {
         console.error(res.error)
+        this.ShowSnackbar(res.error.message);
       }
       else {
         this.awaitingConfirmation = true;
@@ -65,6 +69,11 @@ export class SignupComponent implements OnInit {
   protected NavigateToSignIn(): void {
     console.info('Navigating to sign in page');
     this._router.createUrlTree(['/auth/login'], { queryParams: { returnUrl: this.returnUrl } })
+  }
+
+  private ShowSnackbar(message: string): void {
+    const capitalizedMessage = message.charAt(0).toUpperCase() + message.slice(1);
+    this._snackBar.open(capitalizedMessage, 'Dismiss', {duration: 2000});
   }
 
   // Form fields

@@ -42,11 +42,11 @@
             </mat-form-field>
         </div>
 
-        <button mat-flat-button class="w-100 mb-3" type="submit">Sign In</button>
+        <button mat-flat-button class="w-100 mb-3" type="submit">Sign Up</button>
     </form>
     <div class="text-center">
         <span>Already have an account?</span><br>
-        <a mat-stroked-button (click)="NavigateToSignIn()" routerLinkActive class="w-100">Sign In</a>
+        <a mat-stroked-button routerLink="/auth/login" (click)="NavigateToSignIn()" routerLinkActive class="w-100">Sign In</a>
     </div>
     }
     @else {

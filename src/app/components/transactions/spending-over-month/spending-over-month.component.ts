@@ -28,22 +28,22 @@ export class SpendingOverMonthComponent implements OnInit {
 
   // Event listeners
   ngOnInit(): void {
-    Chart.register(...registerables);
-
     this._authService.GetCurrentUser().subscribe(res => {
       this._userId = res.data.user?.id;
-    });
     
-    let filter = {
-      date: {
-        $gte: new Date(new Date().setDate(new Date().getDate() - 28))
-      }
-    }
+      Chart.register(...registerables);
 
-    this._financeTrackerApi.ReadTransactionsFiltered(filter, true, null, null, this._userId).subscribe((res) => {
-      this.transactions = res.transactions;
-      this.CreateChart()
-    })
+      let filter = {
+        date: {
+          $gte: new Date(new Date().setDate(new Date().getDate() - 28))
+        }
+      }
+  
+      this._financeTrackerApi.ReadTransactionsFiltered(filter, true, null, null, this._userId).subscribe((res) => {
+        this.transactions = res.transactions;
+        this.CreateChart()
+      })
+    });
   }
 
   // Methods
@@ -63,8 +63,6 @@ export class SpendingOverMonthComponent implements OnInit {
       // Create chart data
       chartData.push(transaction.price);
     });
-
-    console.log(chartLabels);
 
     new Chart("recentTransactionsChart", {
       type: 'line',

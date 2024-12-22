@@ -35,7 +35,6 @@ export class SpendingCategoryBreakdownComponent implements OnInit {
   ngOnInit(): void {
     this._authService.GetCurrentUser().subscribe(res => {
       this._userId = res.data.user?.id;
-      console.log(this._userId);
 
       Chart.register(...registerables);
   
@@ -85,13 +84,6 @@ export class SpendingCategoryBreakdownComponent implements OnInit {
           data: this.categoryPopulation,
         }]
       },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
     });
   }
 
