@@ -4,14 +4,15 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 import { Transaction } from '../../interfaces/transaction';
 import { Budget } from '../../interfaces/budget';
 import { TransactionResponse } from '../../interfaces/transaction-response';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FinanceTrackerApiService {
   // Properties
-  private _transactionUrl: string = "http://localhost:3000/api/v1/transaction";
-  private _budgetUrl: string = "http://localhost:3000/api/v1/budget";
+  private _transactionUrl: string = `${environment.API_URL}/api/v1/transaction`;
+  private _budgetUrl: string = `${environment.API_URL}/api/v1/budget`;
 
   // Constructor
   constructor(private _httpClient: HttpClient) { }
