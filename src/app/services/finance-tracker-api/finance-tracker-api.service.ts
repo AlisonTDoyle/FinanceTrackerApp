@@ -11,8 +11,8 @@ import { environment } from '../../../environments/environment';
 })
 export class FinanceTrackerApiService {
   // Properties
-  private _transactionUrl: string = `${environment.API_URL}/api/v1/transaction`;
-  private _budgetUrl: string = `${environment.API_URL}/api/v1/budget`;
+  private _transactionUrl: string = `https://financetrackerapp-t905.onrender.com/api/v1/transaction`;
+  private _budgetUrl: string = `https://financetrackerapp-t905.onrender.com/api/v1/budget`;
 
   // Constructor
   constructor(private _httpClient: HttpClient) { }
