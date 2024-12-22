@@ -8,6 +8,7 @@ import { BudgetManipulationFormComponent } from '../../components/budgets-dashbo
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../services/auth/auth.service';
+import { HeaderComponent } from '../../components/shared/header/header.component';
 
 @Component({
   selector: 'app-budgets-dashboard',
@@ -18,7 +19,8 @@ import { AuthService } from '../../services/auth/auth.service';
     MatSidenavModule,
     BudgetManipulationFormComponent,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    HeaderComponent
   ],
   templateUrl: './budgets-dashboard.component.html',
   styleUrl: './budgets-dashboard.component.scss'

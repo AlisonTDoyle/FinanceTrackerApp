@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { HeaderComponent } from '../../components/shared/header/header.component';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     MatButtonModule,
     MatIconModule,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    HeaderComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

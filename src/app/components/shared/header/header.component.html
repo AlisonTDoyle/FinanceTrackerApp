@@ -3,9 +3,10 @@
 
     <span class="spacer"></span>
 
-    <a routerLink="" routerLinkActive  class="button-spacer-start" mat-button>Home</a>
-    <a routerLink="transactions" routerLinkActive class="button-spacer-start" mat-button>Transactions</a>
-    <a routerLink="budgets" routerLinkActive class="button-spacer-start"  mat-button>Budgets</a>
+    <a routerLink="/" routerLinkActive class="button-spacer-start" mat-button>Home</a>
+    <a routerLink="/transactions" routerLinkActive [ngClass]="{'d-none': !isLoggedIn}" class="button-spacer-start" mat-button>Transactions</a>
+    <a routerLink="/budgets" routerLinkActive [ngClass]="{'d-none': !isLoggedIn}" class="button-spacer-start" mat-button>Budgets</a>
 
-    <a routerLink="" (click)="SignOutUser()" routerLinkActive class="button-spacer-start" mat-flat-button>Log Out</a>
+    <a routerLink="/auth/login" routerLinkActive [ngClass]="{'d-none': isLoggedIn}" class="button-spacer-start"  mat-flat-button>Log In</a>
+    <a routerLink="" (click)="SignOutUser()" [ngClass]="{'d-none': !isLoggedIn}" routerLinkActive class="button-spacer-start" mat-flat-button>Log Out</a>
 </mat-toolbar>

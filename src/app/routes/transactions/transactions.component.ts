@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { PageEvent } from '@angular/material/paginator';
 import { SpendingCategoryBreakdownComponent } from '../../components/transactions/spending-category-breakdown/spending-category-breakdown.component';
 import { AuthService } from '../../services/auth/auth.service';
+import { HeaderComponent } from '../../components/shared/header/header.component';
 
 
 @Component({
@@ -24,7 +25,8 @@ import { AuthService } from '../../services/auth/auth.service';
     MatSidenavModule,
     SpendingOverMonthComponent,
     MatCardModule,
-    SpendingCategoryBreakdownComponent
+    SpendingCategoryBreakdownComponent,
+    HeaderComponent
   ],
   templateUrl: './transactions.component.html',
   styleUrl: './transactions.component.scss'

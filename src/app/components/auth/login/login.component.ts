@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../../services/auth/auth.service';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { HeaderComponent } from '../../shared/header/header.component';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/r
     MatButtonModule,
     MatInputModule,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    HeaderComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'

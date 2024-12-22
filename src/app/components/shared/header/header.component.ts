@@ -22,6 +22,7 @@ import { CommonModule } from '@angular/common';
 })
 export class HeaderComponent implements OnInit {
   // Properties
+  protected isLoggedIn: boolean = false;
 
   // Constructor
   constructor(private _authService: AuthService) {
@@ -30,6 +31,10 @@ export class HeaderComponent implements OnInit {
 
   // Event listeners
   ngOnInit() {
+    this._authService.GetCurrentUser().subscribe(res => {
+      console.log(res);
+      this.isLoggedIn = res.error?.name == "AuthSessionMissingError" ? false : true;
+    });
   }
 
   // Methods
