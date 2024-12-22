@@ -54,11 +54,9 @@ export class FinanceTrackerApiService {
       urlParameters += `page=${pageNo}&`
     }
 
-    if (pageNo != null) {
+    if (userId != null) {
       urlParameters += `userId=${userId}&`
     }
-
-    console.log(urlParameters);
 
     return this._httpClient.post<TransactionResponse>(this._transactionUrl + `/filtered${urlParameters}`, filter);
   }
@@ -91,8 +89,24 @@ export class FinanceTrackerApiService {
       );
   }
 
-  public ReadBudgets() {
+  public ReadBudgets(userId: string | undefined) {
+    let urlParameters = "?";
+
+    if (userId != null) {
+      urlParameters += `userId=${userId}&`
+    }
+
     return this._httpClient.get<Budget[]>(this._budgetUrl)
+  }
+
+  public ReadBudgetsFiltered(userId: string|undefined) {
+    let urlParameters = "?";
+
+    if (userId != null) {
+      urlParameters += `userId=${userId}&`
+    }
+    
+    return this._httpClient.post<Budget[]>(this._budgetUrl + `/filtered${urlParameters}`, {});
   }
 
   public UpdateBudget(id: string | undefined, budget: Budget) {

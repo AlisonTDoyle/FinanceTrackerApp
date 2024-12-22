@@ -88,7 +88,6 @@ export class TransactionManipulationFormComponent implements OnInit {
   ngOnInit():void {
     this._authService.GetCurrentUser().subscribe((user) => {
       this._userId = user?.data.user?.id;
-      console.log(this._userId);
     });
   }
 
@@ -145,8 +144,6 @@ export class TransactionManipulationFormComponent implements OnInit {
       price: form.value.price,
       user: this._userId
     };
-
-    console.table(updatedTransaction)
 
     this._financeTrackerApi.UpdateTransaction(this.existingTransaction?._id, updatedTransaction).subscribe(() => {
       this.manipulationSubmitted.emit();

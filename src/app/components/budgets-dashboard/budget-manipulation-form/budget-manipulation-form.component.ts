@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Budget } from '../../../interfaces/budget';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -10,6 +10,7 @@ import { Categories } from '../../../enums/categories';
 import { FinanceTrackerApiService } from '../../../services/finance-tracker-api/finance-tracker-api.service';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { Allocation } from '../../../interfaces/allocation';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-budget-manipulation-form',
@@ -27,7 +28,7 @@ import { Allocation } from '../../../interfaces/allocation';
   templateUrl: './budget-manipulation-form.component.html',
   styleUrl: './budget-manipulation-form.component.scss'
 })
-export class BudgetManipulationFormComponent {
+export class BudgetManipulationFormComponent implements OnInit {
   // Inputs and outputs
   @Input() budget: Budget | null = null;
   @Output() manipulationSubmitted = new EventEmitter();
@@ -37,9 +38,10 @@ export class BudgetManipulationFormComponent {
   protected formTitle: string = "";
   protected submitButtonText: string = "";
   protected budgetForm: FormGroup = new FormGroup({});
+  private _userId:string|undefined='';
 
   // Constructor
-  constructor(private _formBuilder: FormBuilder, private _financeTrackerApi: FinanceTrackerApiService) {
+  constructor(private _formBuilder: FormBuilder, private _financeTrackerApi: FinanceTrackerApiService, private _authService: AuthService) {
   }
 
   // Event listeners
@@ -87,6 +89,12 @@ export class BudgetManipulationFormComponent {
     }
   }
 
+  ngOnInit(): void {
+    this._authService.GetCurrentUser().subscribe((user) => {
+      this._userId = user?.data.user?.id;
+    });
+  }
+
   // Methods
   protected AddAllocation(): void {
     let allocationFormGroup = this._formBuilder.group({
@@ -101,7 +109,8 @@ export class BudgetManipulationFormComponent {
     let budget: Budget = {
       allocations: form.value.allocations,
       start_date: form.value.start_date,
-      end_date: form.value.end_date
+      end_date: form.value.end_date,
+      user: this._userId
     }
 
     this._financeTrackerApi.CreateBudget(budget).subscribe(() => {
@@ -113,7 +122,8 @@ export class BudgetManipulationFormComponent {
     let budget: Budget = {
       allocations: form.value.allocations,
       start_date: form.value.start_date,
-      end_date: form.value.end_date
+      end_date: form.value.end_date,
+      user: this._userId
     }
 
     this._financeTrackerApi.UpdateBudget(this.budget?._id, budget).subscribe(() => {

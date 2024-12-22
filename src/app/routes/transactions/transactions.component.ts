@@ -68,7 +68,6 @@ export class TransactionsComponent implements OnInit {
       console.log(this._userId);
 
       // When user is fetched, get the transactions
-
       this._financeTrackerApi.ReadTransactionsFiltered({}, null, this.pageSize, this.currentPage, this._userId).subscribe(res => {
         this.transactions = res.transactions
         this.totalDocs = res.totalDocs

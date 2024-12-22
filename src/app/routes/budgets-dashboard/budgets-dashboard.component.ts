@@ -7,6 +7,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { BudgetManipulationFormComponent } from '../../components/budgets-dashboard/budget-manipulation-form/budget-manipulation-form.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-budgets-dashboard',
@@ -29,7 +30,7 @@ export class BudgetsDashboardComponent implements OnInit {
   protected selectedBudget: Budget | null = null;
 
   // Constructor
-  constructor(private _financeTrackerApi: FinanceTrackerApiService) {
+  constructor(private _financeTrackerApi: FinanceTrackerApiService, private _authService: AuthService) {
   }
 
   // Event listeners
@@ -39,10 +40,14 @@ export class BudgetsDashboardComponent implements OnInit {
 
   // Methods
   protected FetchBudgets(): void {
-    this._financeTrackerApi.ReadBudgets().subscribe(returnedBudgets => {
-      console.log(returnedBudgets)
+    // Get the current user
+    this._authService.GetCurrentUser().subscribe(res => {
+
+      // When user is fetched, get the budgets
+    this._financeTrackerApi.ReadBudgetsFiltered(res.data.user?.id).subscribe(returnedBudgets => {
       this.budgets = returnedBudgets;
     })
+    });
   }
 
   protected UpdateSelectedBudget(budget :Budget|null):void {

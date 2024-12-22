@@ -23,7 +23,7 @@
     </mat-form-field>
     <!-- Add allocation form group -->
     <div formArrayName="allocations">
-        @for (alloaction of allocations.controls; track $index ; let i=$index; ){
+        @for (alloaction of allocations.controls; track $index ; let i=$index;){
         <div [formGroupName]="i">
             <hr>
             <div class="row w-100">
