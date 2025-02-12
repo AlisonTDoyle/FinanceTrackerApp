@@ -13,7 +13,6 @@ import { SpendingCategoryBreakdownComponent } from '../../components/transaction
 import { AuthService } from '../../services/auth/auth.service';
 import { HeaderComponent } from '../../components/shared/header/header.component';
 
-
 @Component({
   selector: 'app-transactions',
   standalone: true,
