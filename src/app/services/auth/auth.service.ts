@@ -25,7 +25,7 @@ export class AuthService {
       password: password,
       options: {
         data: {
-          username: username
+          role: "user"
         }
       }
     })
