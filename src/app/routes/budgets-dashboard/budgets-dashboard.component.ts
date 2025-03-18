@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../services/auth/auth.service';
 import { HeaderComponent } from '../../components/shared/header/header.component';
+import { BudgetSpendingComparisonComponent } from '../../components/shared/budget-spending-comparison/budget-spending-comparison.component';
 
 @Component({
   selector: 'app-budgets-dashboard',
@@ -20,7 +21,8 @@ import { HeaderComponent } from '../../components/shared/header/header.component
     BudgetManipulationFormComponent,
     MatIconModule,
     MatButtonModule,
-    HeaderComponent
+    HeaderComponent,
+    BudgetSpendingComparisonComponent
   ],
   templateUrl: './budgets-dashboard.component.html',
   styleUrl: './budgets-dashboard.component.scss'
