@@ -52,4 +52,17 @@ export class AuthService {
     this._userLoggedIn.next(promise == null ? false : true); 
     return from(promise);
   }
+
+  public GetUserRole(): Observable<any> {
+    // Get the user's role
+    let promise:Promise<UserResponse> = this.supabase.auth.getUser();
+    let userRole:string = "";
+
+    promise.then(response => {
+      this._userLoggedIn.next(response == null ? false : true);
+      userRole = response.data.user?.user_metadata["role"];
+    });
+
+    return from(userRole);
+  }
 }

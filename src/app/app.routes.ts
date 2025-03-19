@@ -5,6 +5,8 @@ import { TransactionsComponent } from './routes/transactions/transactions.compon
 import { LoginComponent } from './components/auth/login/login.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
 import { authGuard } from './guards/auth/auth.guard';
+import { adminGuard } from './guards/admin/admin.guard';
+import { AdminDashboardComponent } from './routes/admin-dashboard/admin-dashboard.component';
 
 export const routes: Routes = [
     {
@@ -33,5 +35,11 @@ export const routes: Routes = [
         path: "auth/signup",
         component: SignupComponent,
         title:"Sign Up"
+    },
+    {
+        path: "admin",
+        component: AdminDashboardComponent,
+        title: "Admin",
+        canActivate: [adminGuard]
     }
 ];
