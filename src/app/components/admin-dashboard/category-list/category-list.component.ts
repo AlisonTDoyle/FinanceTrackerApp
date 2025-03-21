@@ -2,15 +2,15 @@ import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
-  selector: 'app-user-list',
+  selector: 'app-category-list',
   standalone: true,
   imports: [
-    MatCardModule,
+      MatCardModule,
   ],
-  templateUrl: './user-list.component.html',
-  styleUrl: './user-list.component.scss'
+  templateUrl: './category-list.component.html',
+  styleUrl: './category-list.component.scss'
 })
-export class UserListComponent {
+export class CategoryListComponent {
   // Properties
 
   // Constructor

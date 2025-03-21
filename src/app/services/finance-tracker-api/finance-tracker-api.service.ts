@@ -13,6 +13,7 @@ export class FinanceTrackerApiService {
   // Properties
   private _transactionUrl: string = `https://financetrackerapi-qm6b.onrender.com/api/v1/transaction`;
   private _budgetUrl: string = `https://financetrackerapi-qm6b.onrender.com/api/v1/budget`;
+  private _categoryUrl:string = environment.API_URL + '/category';
 
   // Constructor
   constructor(private _httpClient: HttpClient) { }
@@ -124,6 +125,19 @@ export class FinanceTrackerApiService {
       .pipe(
         catchError(this.HandleError)
       )
+  }
+  //#endregion
+
+  //#region categories
+  public CreateCategory(newCategory: any) {
+    return this._httpClient.post<any>(this._categoryUrl, newCategory)
+      .pipe(
+        tap((data) => {
+          // Debug message
+          console.log('Data: ' + JSON.stringify(data))
+        }),
+        catchError(this.HandleError)
+      );
   }
   //#endregion
 
