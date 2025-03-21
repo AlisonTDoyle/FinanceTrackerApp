@@ -9,13 +9,9 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   return authService.GetCurrentUser().pipe(
     map(res => {
-      console.log(res);
-
       if (res.error) {
-        console.error('User is not authenticated');
         return router.createUrlTree(['/auth/login'], { queryParams: { returnUrl: state.url } });
       } else {
-        console.info('User is authenticated');
         return true;
       }
     }),

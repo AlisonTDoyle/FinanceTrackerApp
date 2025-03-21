@@ -23,6 +23,7 @@ import { CommonModule } from '@angular/common';
 export class HeaderComponent implements OnInit {
   // Properties
   protected isLoggedIn: boolean = false;
+  protected isAdmin: boolean = false;
 
   // Constructor
   constructor(private _authService: AuthService) {
@@ -32,7 +33,21 @@ export class HeaderComponent implements OnInit {
   // Event listeners
   ngOnInit() {
     this._authService.GetCurrentUser().subscribe(res => {
-      this.isLoggedIn = res.error?.name == "AuthSessionMissingError" ? false : true;
+      console.log(res);
+
+      if (res.error) {
+        this.isLoggedIn = false;
+        this.isAdmin = false;
+      } else {
+        this.isLoggedIn = true;
+
+        // Check if user is an admin
+        if (res.data.user.user_metadata["role"] == "admin") {
+          this.isAdmin = true;
+        } else {
+          this.isAdmin = false;
+        }
+      }
     });
   }
 
