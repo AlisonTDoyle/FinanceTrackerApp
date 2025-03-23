@@ -1,0 +1,29 @@
+<mat-card class="container py-3">
+    <h2 class="fs-4">Category Manager</h2>
+    <mat-dialog-content>
+        <div class="row">
+            <div class="col-6">
+                <form>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Category Name</mat-label>
+                        <input matInput placeholder="Enter category name" required>
+                    </mat-form-field>
+                    <button mat-flat-button>Create Category</button>
+                </form>
+            </div>
+            <div class="col-6">
+                <div *ngFor="let category of categories">
+                    <span>{{category.name}}</span>
+                    <span class="badge" [ngClass]="{
+                        'text-bg-danger': category.status === 'Denied',
+                        'text-bg-success': category.status === 'Approved',
+                        'text-bg-warning': category.status !== 'Denied' && category.status !== 'Approved'
+                    }">
+                        {{category.status}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <button mat-button>Close</button>
+</mat-card>

@@ -4,8 +4,8 @@
     <span class="spacer"></span>
 
     <a routerLink="/" routerLinkActive class="button-spacer-start" mat-button>Home</a>
-    <a routerLink="/transactions" routerLinkActive [ngClass]="{'d-none': !isLoggedIn || isAdmin}" class="button-spacer-start" mat-button>Transactions</a>
-    <a routerLink="/budgets" routerLinkActive [ngClass]="{'d-none': !isLoggedIn || isAdmin}" class="button-spacer-start" mat-button>Budgets</a>
+    <a routerLink="/transactions" routerLinkActive [ngClass]="{'d-none': !isLoggedIn}" class="button-spacer-start" mat-button>Transactions</a>
+    <a routerLink="/budgets" routerLinkActive [ngClass]="{'d-none': !isLoggedIn}" class="button-spacer-start" mat-button>Budgets</a>
     <a routerLink="/admin" routerLinkActive [ngClass]="{'d-none': !isAdmin}" class="button-spacer-start" mat-button>Admin</a>
 
     <a routerLink="/auth/login" routerLinkActive [ngClass]="{'d-none': isLoggedIn}" class="button-spacer-start"  mat-flat-button>Log In</a>

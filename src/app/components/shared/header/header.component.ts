@@ -33,8 +33,6 @@ export class HeaderComponent implements OnInit {
   // Event listeners
   ngOnInit() {
     this._authService.GetCurrentUser().subscribe(res => {
-      console.log(res);
-
       if (res.error) {
         this.isLoggedIn = false;
         this.isAdmin = false;

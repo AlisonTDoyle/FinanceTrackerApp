@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { Transaction } from '../../interfaces/transaction';
 import { Budget } from '../../interfaces/budget';
-import { TransactionResponse } from '../../interfaces/transaction-response';
+import { TransactionResponse } from '../../interfaces/responses/transaction-response';
 import { environment } from '../../../environments/environment';
+import { Category } from '../../interfaces/category';
 
 @Injectable({
   providedIn: 'root'
@@ -138,6 +139,12 @@ export class FinanceTrackerApiService {
         }),
         catchError(this.HandleError)
       );
+  }
+
+  public ReadUserCategories(userId:string) {
+    let searchUrl = `${this._categoryUrl}/${userId}`;
+
+    return this._httpClient.get<Category[]>(searchUrl)
   }
   //#endregion
 
