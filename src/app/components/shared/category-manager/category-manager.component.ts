@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCard } from '@angular/material/card';
-import { Form, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Form, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -31,7 +31,7 @@ export class CategoryManagerComponent implements OnInit {
   // Properties
   protected categories:Category[] = [];
   protected categoryForm:FormGroup = new FormGroup({
-    name: new FormControl('')
+    name: new FormControl('', [Validators.required])
   });
 
   private _userId: string = '';
@@ -62,6 +62,11 @@ export class CategoryManagerComponent implements OnInit {
   }
 
   private CreateNewCategory() {
+    // Validate form
+    if (this.categoryForm.invalid) {
+      return;
+    }
+
     // Format new category
     let newCategory: Category = {
       name: this.categoryForm.get('name')?.value,
@@ -71,6 +76,22 @@ export class CategoryManagerComponent implements OnInit {
     // Create new category
     this._financeTrackerApi.CreateCategory(newCategory).subscribe((res) => {
       this.FetchCategoriesForUser();
+
+      // Reset form
+      this.categoryForm.reset();
     });
+  }
+
+  protected DeleteCategory(category: Category) {
+    let categoryId = category._id || '';
+
+    this._financeTrackerApi.DeleteCategory(categoryId).subscribe((res) => {
+      this.FetchCategoriesForUser();
+    });
+  }
+
+  // Form feilds
+  get name() {
+    return this.categoryForm.get('name');
   }
 }

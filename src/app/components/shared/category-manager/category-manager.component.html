@@ -4,15 +4,18 @@
         <div class="row">
             <div class="col-6">
                 <form [formGroup]="categoryForm" (submit)="onSubmit()">
-                    <mat-form-field appearance="outline" class="w-100">
+                    <mat-form-field appearance="outline" class="w-100 mb-2">
                         <mat-label>Category Name</mat-label>
                         <input formControlName="name" matInput placeholder="Enter category name" required>
+                        @if (name?.hasError('required')) {
+                        <mat-error>Category name is required </mat-error>
+                        }
                     </mat-form-field>
                     <button mat-flat-button>Create Category</button>
                 </form>
             </div>
             <div class="col-6">
-                <div *ngFor="let category of categories">
+                <!-- <div *ngFor="let category of categories">
                     <span>{{category.name}}</span>
                     <span class="badge" [ngClass]="{
                         'text-bg-danger': category.status === 'Denied',
@@ -21,7 +24,37 @@
                     }">
                         {{category.status}}
                     </span>
-                </div>
+                </div> -->
+                @if (categories.length > 0) {
+                    <table class="table" style="max-height: 80rem; overflow-y: auto;">
+                        <thead>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let cat of categories">
+                                <td>{{cat.name}}</td>
+                                <td><span class="badge p-1" [ngClass]="{
+                                    'text-bg-danger': cat.status === 'Denied',
+                                    'text-bg-success': cat.status === 'Approved',
+                                    'text-bg-warning': cat.status !== 'Denied' && cat.status !== 'Approved'
+                                }">{{cat.status}}</span></td>
+                                <td>
+                                    <button mat-mini-fab class="text-bg-danger mx-1" (click)="DeleteCategory(cat)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                    <button mat-mini-fab class="text-bg-warning mx-1">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+                @else {
+                <p>No categories found</p>
+                }
             </div>
         </div>
     </mat-dialog-content>

@@ -12,8 +12,8 @@ import { Category } from '../../interfaces/category';
 })
 export class FinanceTrackerApiService {
   // Properties
-  private _transactionUrl: string = `https://financetrackerapi-qm6b.onrender.com/api/v1/transaction`;
-  private _budgetUrl: string = `https://financetrackerapi-qm6b.onrender.com/api/v1/budget`;
+  private _transactionUrl: string = environment.API_URL + '/transaction';
+  private _budgetUrl: string = environment.API_URL + '/budget';
   private _categoryUrl:string = environment.API_URL + '/category';
 
   // Constructor
@@ -145,6 +145,40 @@ export class FinanceTrackerApiService {
     let searchUrl = `${this._categoryUrl}/${userId}`;
 
     return this._httpClient.get<Category[]>(searchUrl)
+  }
+
+  public ReadAllCategories(pageSize:number, pageNo:number) {
+    let urlParameters = `${this._categoryUrl}?pageSize=${pageSize}&page=${pageNo}`;
+    let filter = {};
+
+    return this._httpClient.post<Category[]>(urlParameters, filter);
+  }
+
+  public ApproveCategory(categoryId:string) {
+    let approveUrl = `${this._categoryUrl}/approve/${categoryId}`;
+
+    return this._httpClient.put(approveUrl, {})
+      .pipe(
+        catchError(this.HandleError)
+      )
+  }
+
+  public DenyCategory(categoryId:string) {
+    let denyUrl = `${this._categoryUrl}/deny/${categoryId}`;
+
+    return this._httpClient.put(denyUrl, {})
+      .pipe(
+        catchError(this.HandleError)
+      )
+  }
+
+  public DeleteCategory(categoryId:string) {
+    let deleteUrl = `${this._categoryUrl}/${categoryId}`;
+
+    return this._httpClient.delete(deleteUrl)
+      .pipe(
+        catchError(this.HandleError)
+      )
   }
   //#endregion
 
