@@ -3,10 +3,10 @@
     <mat-dialog-content>
         <div class="row">
             <div class="col-6">
-                <form>
+                <form [formGroup]="categoryForm" (submit)="onSubmit()">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Category Name</mat-label>
-                        <input matInput placeholder="Enter category name" required>
+                        <input formControlName="name" matInput placeholder="Enter category name" required>
                     </mat-form-field>
                     <button mat-flat-button>Create Category</button>
                 </form>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCard } from '@angular/material/card';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Form, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -30,6 +30,9 @@ import { AuthService } from '../../../services/auth/auth.service';
 export class CategoryManagerComponent implements OnInit {
   // Properties
   protected categories:Category[] = [];
+  protected categoryForm:FormGroup = new FormGroup({
+    name: new FormControl('')
+  });
 
   private _userId: string = '';
 
@@ -47,10 +50,27 @@ export class CategoryManagerComponent implements OnInit {
     });
   }
 
+  onSubmit() {
+    this.CreateNewCategory();
+  }
+
   // Methods
   private FetchCategoriesForUser() {
     this._financeTrackerApi.ReadUserCategories(this._userId).subscribe((res) => {
       this.categories = res;
+    });
+  }
+
+  private CreateNewCategory() {
+    // Format new category
+    let newCategory: Category = {
+      name: this.categoryForm.get('name')?.value,
+      user: this._userId,
+    }
+
+    // Create new category
+    this._financeTrackerApi.CreateCategory(newCategory).subscribe((res) => {
+      this.FetchCategoriesForUser();
     });
   }
 }
