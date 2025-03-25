@@ -2,7 +2,7 @@
     <h2 class="fs-4">Category Manager</h2>
     <mat-dialog-content>
         <div class="row">
-            <div class="col-6">
+            <div class="col-12">
                 <form [formGroup]="categoryForm" (submit)="onSubmit()">
                     <mat-form-field appearance="outline" class="w-100 mb-2">
                         <mat-label>Category Name</mat-label>
@@ -14,7 +14,7 @@
                     <button mat-flat-button>Create Category</button>
                 </form>
             </div>
-            <div class="col-6">
+            <div class="col-12">
                 <!-- <div *ngFor="let category of categories">
                     <span>{{category.name}}</span>
                     <span class="badge" [ngClass]="{
@@ -26,11 +26,13 @@
                     </span>
                 </div> -->
                 @if (categories.length > 0) {
-                    <table class="table" style="max-height: 80rem; overflow-y: auto;">
+                    <table class="table my-4" style="max-height: 80rem; overflow-y: auto;">
                         <thead>
-                            <th>Name</th>
-                            <th>Status</th>
-                            <th></th>
+                            <tr>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let cat of categories">
@@ -44,9 +46,9 @@
                                     <button mat-mini-fab class="text-bg-danger mx-1" (click)="DeleteCategory(cat)">
                                         <mat-icon>delete</mat-icon>
                                     </button>
-                                    <button mat-mini-fab class="text-bg-warning mx-1">
+                                    <!-- <button mat-mini-fab class="text-bg-warning mx-1">
                                         <mat-icon>edit</mat-icon>
-                                    </button>
+                                    </button> -->
                                 </td>
                             </tr>
                         </tbody>
@@ -58,5 +60,5 @@
             </div>
         </div>
     </mat-dialog-content>
-    <button mat-button>Close</button>
+    <button mat-button mat-dialog-close type="button">Close</button>
 </mat-card>

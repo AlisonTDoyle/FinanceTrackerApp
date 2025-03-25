@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, HostListener } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, HostListener, inject } from '@angular/core';
 import { Transaction, TransactionType } from '../../../interfaces/transaction';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -8,6 +8,8 @@ import { FinanceTrackerApiService } from '../../../services/finance-tracker-api/
 import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { CategoryManagerComponent } from '../../shared/category-manager/category-manager.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-recent-transactions-list',
@@ -29,6 +31,7 @@ export class RecentTransactionsListComponent implements OnInit{
   protected displayedColumns:string[] = []
   protected columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   protected currentPage:number = 0;
+  protected dialog = inject(MatDialog)
   
   // Inputs and outputs
   @Input() transactions:Transaction[] = []
@@ -49,6 +52,10 @@ export class RecentTransactionsListComponent implements OnInit{
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.SelectColumnsToDisplay();
+  }
+
+  openDialog(): void {
+    this.dialog.open(CategoryManagerComponent, {width: '120rem'});
   }
 
   // Methods

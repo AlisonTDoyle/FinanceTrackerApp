@@ -45,10 +45,6 @@ export class TransactionManipulationFormComponent implements OnInit {
   protected formTile: string = "";
   protected submitButtonText: string = "";
   protected catgories = Categories;
-  protected transactionTypes: string[] = [
-    "Outgoing",
-    "Incoming"
-  ];
   protected transactionForm: FormGroup = new FormGroup({});
   private _userId:string|undefined='';
 
@@ -63,7 +59,6 @@ export class TransactionManipulationFormComponent implements OnInit {
       this.transactionForm = _formBuilder.group({
         name: ["", [Validators.required, Validators.minLength(3)]],
         date: ["", [Validators.required]],
-        type: ["", [Validators.minLength(2), Validators.required]],
         price: ["", [Validators.min(0), Validators.required]],
         description: ["", [Validators.minLength(0), Validators.maxLength(150)]],
         category: ["", [Validators.required]]
@@ -76,7 +71,6 @@ export class TransactionManipulationFormComponent implements OnInit {
       this.transactionForm = _formBuilder.group({
         name: [this.existingTransaction?.name, [Validators.required, Validators.minLength(3)]],
         date: [this.existingTransaction?.date, [Validators.required]],
-        type: [this.existingTransaction?.type, [Validators.minLength(2), Validators.required]],
         price: [this.existingTransaction?.price, [Validators.min(0), Validators.required]],
         description: [this.existingTransaction?.description, [Validators.minLength(0), Validators.maxLength(150)]],
         category: [this.existingTransaction?.category,[Validators.required]]
@@ -105,7 +99,6 @@ export class TransactionManipulationFormComponent implements OnInit {
       this.transactionForm.patchValue({
         name: this.existingTransaction.name,
         date: this.existingTransaction.date,
-        type: this.existingTransaction.type,
         price: this.existingTransaction.price,
         description: this.existingTransaction.description,
         category: this.existingTransaction.category,
@@ -122,7 +115,6 @@ export class TransactionManipulationFormComponent implements OnInit {
     let newTransaction: Transaction = {
       name: form.value.name,
       date: form.value.date,
-      type: form.value.type,
       description: form.value.description,
       category: form.value.category,
       price: form.value.price,
@@ -138,7 +130,6 @@ export class TransactionManipulationFormComponent implements OnInit {
     let updatedTransaction: Transaction = {
       name: form.value.name,
       date: form.value.date,
-      type: form.value.type,
       description: form.value.description,
       category: form.value.category,
       price: form.value.price,
@@ -158,11 +149,7 @@ export class TransactionManipulationFormComponent implements OnInit {
   get date() {
     return this.transactionForm.get('date');
   }
-
-  get type() {
-    return this.transactionForm.get('type');
-  }
-
+   
   get description() {
     return this.transactionForm.get('description');
   }

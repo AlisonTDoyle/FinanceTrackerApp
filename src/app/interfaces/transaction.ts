@@ -8,7 +8,6 @@ export interface Transaction {
     category?:Categories;
     date:Date;
     price:number;
-    type:string;
 }
 
 export enum TransactionType {
