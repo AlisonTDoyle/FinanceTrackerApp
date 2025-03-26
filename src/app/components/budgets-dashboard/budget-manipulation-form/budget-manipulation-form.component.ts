@@ -6,11 +6,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { Categories } from '../../../enums/categories';
 import { FinanceTrackerApiService } from '../../../services/finance-tracker-api/finance-tracker-api.service';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { Allocation } from '../../../interfaces/allocation';
 import { AuthService } from '../../../services/auth/auth.service';
+import { Category } from '../../../interfaces/category';
 
 @Component({
   selector: 'app-budget-manipulation-form',
@@ -39,6 +39,7 @@ export class BudgetManipulationFormComponent implements OnInit {
   protected submitButtonText: string = "";
   protected budgetForm: FormGroup = new FormGroup({});
   private _userId:string|undefined='';
+  protected categories: Category[] = [];
 
   // Constructor
   constructor(private _formBuilder: FormBuilder, private _financeTrackerApi: FinanceTrackerApiService, private _authService: AuthService) {
@@ -92,6 +93,12 @@ export class BudgetManipulationFormComponent implements OnInit {
   ngOnInit(): void {
     this._authService.GetCurrentUser().subscribe((user) => {
       this._userId = user?.data.user?.id;
+
+      if (this._userId) {
+        this._financeTrackerApi.ReadUserCategories(this._userId).subscribe((categories) => {
+          this.categories = categories;
+        });
+      }
     });
   }
 
@@ -146,9 +153,5 @@ export class BudgetManipulationFormComponent implements OnInit {
 
   protected get allocations(): FormArray {
     return this.budgetForm.get('allocations') as FormArray;
-  }
-
-  get categoryKeys(): string[] {
-    return Object.values(Categories); // Use Object.keys(UserRole) for numeric enums
   }
 }

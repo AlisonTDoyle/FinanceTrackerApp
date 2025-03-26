@@ -1,4 +1,3 @@
-import { Categories } from "../enums/categories";
 import { Category } from "./category";
 
 export interface Transaction {

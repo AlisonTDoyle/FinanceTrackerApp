@@ -14,7 +14,6 @@ import {
   FormBuilder,
   Validators,
 } from '@angular/forms';
-import { Categories } from '../../../enums/categories';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Category } from '../../../interfaces/category';

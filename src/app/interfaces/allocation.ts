@@ -1,6 +1,6 @@
-import { Categories } from "../enums/categories";
+import { Category } from "./category";
 
 export interface Allocation {
-    category:Categories;
+    category:Category;
     allocated_amount:number;
 }
