@@ -8,9 +8,14 @@
             </tr>
         </thead>
         <tbody>
-            <td>12345</td>
-            <td>My Very Real Category</td>
-            <td><button>hello world</button></td>
+            <tr *ngFor="let category of categories">
+                <td>{{ category.user }}</td>
+                <td>{{ category.name }}</td>
+                <td>
+                    <button mat-button class="text-bg-success mx-1" style="width: 10rem;" (click)="ApproveCategory(category._id)">Approve</button>
+                    <button mat-button class="text-bg-danger mx-1" style="width: 10rem;" (click)="RejectCategory(category._id)">Reject</button>
+                </td>
+            </tr>
         </tbody>
     </table>
 </mat-card>

@@ -6,6 +6,7 @@ import { Budget } from '../../interfaces/budget';
 import { TransactionResponse } from '../../interfaces/responses/transaction-response';
 import { environment } from '../../../environments/environment';
 import { Category } from '../../interfaces/category';
+import { FilteredCatgoriesResponse } from '../../interfaces/responses/filtered-catgories-response';
 
 @Injectable({
   providedIn: 'root'
@@ -147,11 +148,12 @@ export class FinanceTrackerApiService {
     return this._httpClient.get<Category[]>(searchUrl)
   }
 
-  public ReadAllCategories(pageSize:number, pageNo:number) {
-    let urlParameters = `${this._categoryUrl}?pageSize=${pageSize}&page=${pageNo}`;
-    let filter = {};
+  public ReadAllCategories(pageSize:number, pageNo:number, filter:any) {
+    let urlParameters = `${this._categoryUrl}/filtered?pageSize=${pageSize}&page=${pageNo}`;
 
-    return this._httpClient.post<Category[]>(urlParameters, filter);
+    console.log(filter);
+
+    return this._httpClient.post<FilteredCatgoriesResponse>(urlParameters, filter);
   }
 
   public ApproveCategory(categoryId:string) {
