@@ -119,14 +119,17 @@ export class TransactionManipulationFormComponent implements OnInit {
 
   // Methods
   protected CreateTransaction(form: FormGroup): void {
+    let selectedCategory = this.catgories.find(cat => cat.name === form.value.category);
     let newTransaction: Transaction = {
       name: form.value.name,
       date: form.value.date,
       description: form.value.description,
-      category: form.value.category,
+      category: selectedCategory || undefined,
       price: form.value.price,
       user: this._userId
     };
+
+    console.log(newTransaction)
 
     this._financeTrackerApi.CreateTransaction(newTransaction).subscribe(() => {
       this.transactionForm.reset();

@@ -18,7 +18,7 @@ export class SpendingCategoryBreakdownComponent implements OnInit {
 
   // Properties
   protected catgories: Category[] = [];
-  protected categoryNames:string[] = [];
+  protected categoryNames: string[] = [];
   private _userId: string | undefined = "";
 
   // Inputs and outputs
@@ -54,11 +54,14 @@ export class SpendingCategoryBreakdownComponent implements OnInit {
           this._financeTrackerApi.ReadTransactionsFiltered(filter, null, null, null, this._userId).subscribe((res) => {
 
             res.transactions.forEach(transaction => {
+              console.log(transaction.category?.name);
               const categoryIndex = this.catgories.findIndex(category => category.name === transaction.category?.name);
               if (categoryIndex !== -1) {
                 this.categoryPopulation[categoryIndex]++;
               }
             });
+
+            console.log(this.categoryPopulation);
 
             this.CreateChart()
           })
