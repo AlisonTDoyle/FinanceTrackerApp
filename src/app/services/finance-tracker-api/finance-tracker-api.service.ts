@@ -103,14 +103,14 @@ export class FinanceTrackerApiService {
     return this._httpClient.get<Budget[]>(this._budgetUrl)
   }
 
-  public ReadBudgetsFiltered(userId: string|undefined) {
+  public ReadBudgetsFiltered(userId: string|undefined, filter: any) {
     let urlParameters = "?";
 
     if (userId != null) {
       urlParameters += `userId=${userId}&`
     }
     
-    return this._httpClient.post<Budget[]>(this._budgetUrl + `/filtered${urlParameters}`, {});
+    return this._httpClient.post<Budget[]>(this._budgetUrl + `/filtered${urlParameters}`, filter);
   }
 
   public UpdateBudget(id: string | undefined, budget: Budget) {

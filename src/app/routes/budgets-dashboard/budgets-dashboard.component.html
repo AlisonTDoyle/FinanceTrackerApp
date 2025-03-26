@@ -2,18 +2,29 @@
 <mat-drawer-container class="h-100">
     <mat-drawer #drawer style="width: 28rem; height: 57rem;" class="position-fixed h-100" position="end">
         <div style="padding: 2rem;">
-            <app-budget-manipulation-form [budget]="selectedBudget" (manipulationSubmitted)="FetchBudgets()" (closeDrawer)="drawer.toggle()"></app-budget-manipulation-form>
+            <app-budget-manipulation-form [budget]="currentBudget" (manipulationSubmitted)="FetchBudgets()"
+                (closeDrawer)="drawer.toggle()"></app-budget-manipulation-form>
         </div>
     </mat-drawer>
     <mat-drawer-content>
         <div class="container">
             <h1>Budgets</h1>
-            <button mat-fab extended class="mb-2" (click)="UpdateSelectedBudget(null); drawer.toggle()"><mat-icon>edit</mat-icon> Create New Budget</button>
-            <mat-accordion>
-                @for (budget of budgets; track budget) {
-                    <app-budget-info [budget]="budget" (deleteBudgetEvent)="DeleteBudget($event)" (editBudgetEvent)="UpdateSelectedBudget($event); drawer.toggle()"></app-budget-info>
-                }
-            </mat-accordion>
+            <button mat-fab extended class="mb-2"
+                (click)="UpdateSelectedBudget(null); drawer.toggle()"><mat-icon>edit</mat-icon> Create New
+                Budget</button>
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <app-current-budget [currentBudget]="currentBudget"></app-current-budget>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <mat-accordion>
+                        @for (budget of budgets; track budget) {
+                        <app-budget-info [budget]="budget" (deleteBudgetEvent)="DeleteBudget($event)"
+                            (editBudgetEvent)="UpdateSelectedBudget($event); drawer.toggle()"></app-budget-info>
+                        }
+                    </mat-accordion>
+                </div>
+            </div>
         </div>
     </mat-drawer-content>
 </mat-drawer-container>

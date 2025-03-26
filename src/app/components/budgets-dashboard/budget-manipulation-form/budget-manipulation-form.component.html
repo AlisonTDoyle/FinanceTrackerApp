@@ -1,8 +1,9 @@
 <button type="button" mat-stroked-button class="position-fixed end-0 me-4" (click)="closeDrawer.emit()"><mat-icon>close</mat-icon>Close</button>
 <form [formGroup]="budgetForm" (submit)="OnSubmit()">
     <h2>{{formTitle}}</h2>
+    <h3>{{startDate | date:'dd MMM YY'}} - {{endDate | date:'dd MMM YY'}}</h3>
     <!-- Start date field -->
-    <mat-form-field appearance="outline" style="width: 100%;">
+    <!-- <mat-form-field appearance="outline" style="width: 100%;">
         <mat-label>Start Date</mat-label>
         <input matInput [matDatepicker]="start_date_picker" formControlName="start_date">
         <mat-datepicker-toggle matIconSuffix [for]="start_date_picker"></mat-datepicker-toggle>
@@ -10,9 +11,9 @@
         @if (start_date?.hasError('required')) {
         <mat-error>Start date is required </mat-error>
         }
-    </mat-form-field>
+    </mat-form-field> -->
     <!-- End date field -->
-    <mat-form-field appearance="outline" style="width: 100%;">
+    <!-- <mat-form-field appearance="outline" style="width: 100%;">
         <mat-label>End Date</mat-label>
         <input matInput [matDatepicker]="end_date_picker" formControlName="end_date">
         <mat-datepicker-toggle matIconSuffix [for]="end_date_picker"></mat-datepicker-toggle>
@@ -20,7 +21,7 @@
         @if (end_date?.hasError('required')) {
         <mat-error>End date is required </mat-error>
         }
-    </mat-form-field>
+    </mat-form-field> -->
     <!-- Add allocation form group -->
     <div formArrayName="allocations">
         @for (allocation of allocations.controls; track allocation ; let i=$index;){

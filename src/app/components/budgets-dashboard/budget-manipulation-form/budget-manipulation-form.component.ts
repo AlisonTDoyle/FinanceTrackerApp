@@ -11,6 +11,7 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { Allocation } from '../../../interfaces/allocation';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Category } from '../../../interfaces/category';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-budget-manipulation-form',
@@ -23,7 +24,8 @@ import { Category } from '../../../interfaces/category';
     MatInputModule,
     MatDatepickerModule,
     MatSelectModule,
-    MatIconModule
+    MatIconModule,
+    DatePipe
   ],
   templateUrl: './budget-manipulation-form.component.html',
   styleUrl: './budget-manipulation-form.component.scss'
@@ -35,6 +37,8 @@ export class BudgetManipulationFormComponent implements OnInit {
   @Output() closeDrawer = new EventEmitter();
 
   // Properties
+  protected startDate: Date = new Date();
+  protected endDate: Date = new Date();
   protected formTitle: string = "";
   protected submitButtonText: string = "";
   protected budgetForm: FormGroup = new FormGroup({});
@@ -91,12 +95,21 @@ export class BudgetManipulationFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Set start and end date to current month
+    let date = new Date();
+    this.startDate = new Date(date.getFullYear(), date.getMonth(), 1);
+    this.endDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     this._authService.GetCurrentUser().subscribe((user) => {
       this._userId = user?.data.user?.id;
 
+      // Get categories
       if (this._userId) {
         this._financeTrackerApi.ReadUserCategories(this._userId).subscribe((categories) => {
-          this.categories = categories;
+          categories.map((cat) => {
+            if (cat.status != "Denied" && cat.status != "Pending") {
+              this.categories.push(cat);
+            }
+          })
         });
       }
     });
