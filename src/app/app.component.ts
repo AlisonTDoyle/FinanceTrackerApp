@@ -12,7 +12,6 @@ declare var gtag: Function;
   standalone: true,
   imports: [
     RouterOutlet,
-    HeaderComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

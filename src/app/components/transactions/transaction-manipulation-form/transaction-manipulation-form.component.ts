@@ -86,7 +86,11 @@ export class TransactionManipulationFormComponent implements OnInit {
       // Get categories
       if (this._userId) {
         this._financeTrackerApi.ReadUserCategories(this._userId).subscribe((categories) => {
-          this.catgories = categories;
+          categories.map((cat) => {
+            if (cat.status != "Denied" && cat.status != "Pending") {
+              this.catgories.push(cat);
+            }
+          })
         });
       }
     });

@@ -66,7 +66,6 @@ export class TransactionsComponent implements OnInit {
     // Get the current user
     this._authService.GetCurrentUser().subscribe(res => {
       this._userId = res.data.user?.id;
-      console.log(this._userId);
 
       // When user is fetched, get the transactions
       this._financeTrackerApi.ReadTransactionsFiltered({}, null, this.pageSize, this.currentPage, this._userId).subscribe(res => {

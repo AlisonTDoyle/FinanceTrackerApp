@@ -26,7 +26,9 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let cat of categories">
-                                <td>{{cat.name}}</td>
+                                <td [ngClass]="{'text-secondary': cat.status === 'Denied'}" [style.textDecoration]="cat.status === 'Denied' ? 'line-through' : 'none'">
+                                    {{cat.name}}
+                                </td>
                                 <td><span class="badge p-1" [ngClass]="{
                                     'text-bg-danger': cat.status === 'Denied',
                                     'text-bg-success': cat.status === 'Approved',
