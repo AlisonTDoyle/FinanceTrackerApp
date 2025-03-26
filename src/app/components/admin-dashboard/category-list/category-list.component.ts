@@ -3,7 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { FinanceTrackerApiService } from '../../../services/finance-tracker-api/finance-tracker-api.service';
 import { FilteredCatgoriesResponse } from '../../../interfaces/responses/filtered-catgories-response';
 import { Category } from '../../../interfaces/category';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -12,7 +12,8 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [
       MatCardModule,
       CommonModule,
-      MatButtonModule
+      MatButtonModule,
+      DatePipe
   ],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.scss'

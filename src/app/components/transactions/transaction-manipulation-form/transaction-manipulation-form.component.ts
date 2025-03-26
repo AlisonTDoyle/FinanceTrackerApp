@@ -17,6 +17,7 @@ import {
 import { Categories } from '../../../enums/categories';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../services/auth/auth.service';
+import { Category } from '../../../interfaces/category';
 
 @Component({
   selector: 'app-transaction-manipulation-form',
@@ -44,7 +45,7 @@ export class TransactionManipulationFormComponent implements OnInit {
   // Properties
   protected formTile: string = "";
   protected submitButtonText: string = "";
-  protected catgories = Categories;
+  protected catgories:Category[]=[];
   protected transactionForm: FormGroup = new FormGroup({});
   private _userId:string|undefined='';
 
@@ -82,6 +83,13 @@ export class TransactionManipulationFormComponent implements OnInit {
   ngOnInit():void {
     this._authService.GetCurrentUser().subscribe((user) => {
       this._userId = user?.data.user?.id;
+
+      // Get categories
+      if (this._userId) {
+        this._financeTrackerApi.ReadUserCategories(this._userId).subscribe((categories) => {
+          this.catgories = categories;
+        });
+      }
     });
   }
 
@@ -122,6 +130,8 @@ export class TransactionManipulationFormComponent implements OnInit {
     };
 
     this._financeTrackerApi.CreateTransaction(newTransaction).subscribe(() => {
+      this.transactionForm.reset();
+      this.existingTransaction = null;
       this.manipulationSubmitted.emit();
     });
   }
@@ -137,6 +147,8 @@ export class TransactionManipulationFormComponent implements OnInit {
     };
 
     this._financeTrackerApi.UpdateTransaction(this.existingTransaction?._id, updatedTransaction).subscribe(() => {
+      this.transactionForm.reset();
+      this.existingTransaction = null;
       this.manipulationSubmitted.emit();
     });
   }
@@ -160,9 +172,5 @@ export class TransactionManipulationFormComponent implements OnInit {
 
   get price() {
     return this.transactionForm.get('price');
-  }
-
-  get categoryKeys(): string[] {
-    return Object.values(Categories); // Use Object.keys(UserRole) for numeric enums
   }
 }

@@ -45,31 +45,31 @@ export class SpendingCategoryBreakdownComponent implements OnInit {
         }
       }
   
-      this._financeTrackerApi.ReadTransactionsFiltered(filter, null, null, null, this._userId).subscribe((res) => {
-        res.transactions.forEach(transaction => {
-          switch (transaction.category) {
-            case "Housing":
-              this.categoryPopulation[0]++
-              break;
-            case "Transportation":
-              this.categoryPopulation[1]++
-              break;
-            case "Food":
-              this.categoryPopulation[2]++
-              break;
-            case "Health & Wellness":
-              this.categoryPopulation[3]++
-              break;
-            case "Entertainment & Recreation":
-              this.categoryPopulation[4]++
-              break;
-            case "Misc":
-              this.categoryPopulation[5]++
-              break;
-          }
-        });
-        this.CreateChart()
-      })
+      // this._financeTrackerApi.ReadTransactionsFiltered(filter, null, null, null, this._userId).subscribe((res) => {
+      //   res.transactions.forEach(transaction => {
+      //     switch (transaction.category) {
+      //       case "Housing":
+      //         this.categoryPopulation[0]++
+      //         break;
+      //       case "Transportation":
+      //         this.categoryPopulation[1]++
+      //         break;
+      //       case "Food":
+      //         this.categoryPopulation[2]++
+      //         break;
+      //       case "Health & Wellness":
+      //         this.categoryPopulation[3]++
+      //         break;
+      //       case "Entertainment & Recreation":
+      //         this.categoryPopulation[4]++
+      //         break;
+      //       case "Misc":
+      //         this.categoryPopulation[5]++
+      //         break;
+      //     }
+      //   });
+      //   this.CreateChart()
+      // })
     });
   }
 

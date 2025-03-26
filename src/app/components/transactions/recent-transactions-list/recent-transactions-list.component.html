@@ -1,7 +1,7 @@
 <h2>Transactions</h2>
-<button mat-fab extended (click)="RecordNewTransaction()" class="mb-2"><mat-icon>edit</mat-icon>Record
+<button mat-fab extended (click)="RecordNewTransaction()" class="mb-2 mx-2"><mat-icon>edit</mat-icon>Record
     Transaction</button>
-<button mat-fab extended (click)="openDialog()" class="mb-2"><mat-icon>edit</mat-icon>Manage Categories</button>
+<button mat-fab extended (click)="openDialog()" class="mb-2 mx-2"><mat-icon>edit</mat-icon>Manage Categories</button>
 <mat-card class="p-2" style="background-color: white;">
     @if (transactions.length > 0) {
     <table mat-table [dataSource]="transactions" style="background-color: white;">

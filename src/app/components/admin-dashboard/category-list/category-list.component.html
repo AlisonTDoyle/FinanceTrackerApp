@@ -4,6 +4,7 @@
             <tr>
                 <th>User Id</th>
                 <th>Category Name</th>
+                <th>Date Created</th>
                 <th></th>
             </tr>
         </thead>
@@ -11,6 +12,7 @@
             <tr *ngFor="let category of categories">
                 <td>{{ category.user }}</td>
                 <td>{{ category.name }}</td>
+                <td>{{ category.created | date }}</td>
                 <td>
                     <button mat-button class="text-bg-success mx-1" style="width: 10rem;" (click)="ApproveCategory(category._id)">Approve</button>
                     <button mat-button class="text-bg-danger mx-1" style="width: 10rem;" (click)="RejectCategory(category._id)">Reject</button>
