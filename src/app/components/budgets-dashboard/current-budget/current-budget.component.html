@@ -11,12 +11,23 @@
 
                 <ng-container matColumnDef="allocatedSpending">
                     <th mat-header-cell *matHeaderCellDef> Allocated Spending </th>
-                    <td mat-cell *matCellDef="let element"> {{element.allocatedSpending | currency}} </td>
+                    <td mat-cell *matCellDef="let allocation"> {{ allocation.allocated_amount | currency:"EUR"}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="actualSpending">
                     <th mat-header-cell *matHeaderCellDef> Actual Spending </th>
-                    <td mat-cell *matCellDef="let element"> {{element.actualSpending | currency}} </td>
+                    <td mat-cell *matCellDef="let allocation; let i = index">
+                        <span>{{ actualSpendingPerCategory[i] | currency:"EUR" }} </span>
+                        @if (actualSpendingPerCategory[i] > allocation.allocated_amount) {
+                        <span class="text-danger end-0" title="Amount over budget">({{actualSpendingPerCategory[i] -
+                            allocation.allocated_amount | currency:"EUR"}}<mat-icon>arrow_drop_up</mat-icon>)</span>
+                        }
+                        @else if (actualSpendingPerCategory[i] < allocation.allocated_amount) { 
+                            <span
+                            class="text-success end-0" title="Amount under budget">({{allocation.allocated_amount -
+                            actualSpendingPerCategory[i] | currency:"EUR"}}<mat-icon>arrow_drop_down</mat-icon>)</span>
+                            }
+                    </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="['category', 'allocatedSpending', 'actualSpending']"></tr>
