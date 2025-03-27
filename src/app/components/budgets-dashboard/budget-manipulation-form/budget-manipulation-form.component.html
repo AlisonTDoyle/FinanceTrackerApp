@@ -2,26 +2,6 @@
 <form [formGroup]="budgetForm" (submit)="OnSubmit()">
     <h2>{{formTitle}}</h2>
     <h3>{{startDate | date:'dd MMM YY'}} - {{endDate | date:'dd MMM YY'}}</h3>
-    <!-- Start date field -->
-    <!-- <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-label>Start Date</mat-label>
-        <input matInput [matDatepicker]="start_date_picker" formControlName="start_date">
-        <mat-datepicker-toggle matIconSuffix [for]="start_date_picker"></mat-datepicker-toggle>
-        <mat-datepicker #start_date_picker></mat-datepicker>
-        @if (start_date?.hasError('required')) {
-        <mat-error>Start date is required </mat-error>
-        }
-    </mat-form-field> -->
-    <!-- End date field -->
-    <!-- <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-label>End Date</mat-label>
-        <input matInput [matDatepicker]="end_date_picker" formControlName="end_date">
-        <mat-datepicker-toggle matIconSuffix [for]="end_date_picker"></mat-datepicker-toggle>
-        <mat-datepicker #end_date_picker></mat-datepicker>
-        @if (end_date?.hasError('required')) {
-        <mat-error>End date is required </mat-error>
-        }
-    </mat-form-field> -->
     <!-- Add allocation form group -->
     <div formArrayName="allocations">
         @for (allocation of allocations.controls; track allocation ; let i=$index;){
@@ -35,7 +15,7 @@
             </div>
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Category</mat-label>
-                <mat-select formControlName="category">
+                <mat-select formControlName="category" [value]="allocations.at(i).value.category">
                     @for (category of categories; track category;) {
                     <mat-option [value]="category">{{category.name}}</mat-option>
                     }

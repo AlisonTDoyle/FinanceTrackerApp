@@ -26,7 +26,8 @@ import { CurrentBudgetComponent } from '../../components/budgets-dashboard/curre
     HeaderComponent,
     DatePipe,
     MatCardModule,
-    CurrentBudgetComponent
+    CurrentBudgetComponent,
+    MatExpansionModule
   ],
   templateUrl: './budgets-dashboard.component.html',
   styleUrl: './budgets-dashboard.component.scss'
@@ -52,7 +53,7 @@ export class BudgetsDashboardComponent implements OnInit {
       let date = new Date();
       let startDate = new Date(date.getFullYear(), date.getMonth(), 1);
       let endDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-  
+
       let filter = {
         "start_date": startDate,
         "end_date": endDate
@@ -67,19 +68,20 @@ export class BudgetsDashboardComponent implements OnInit {
           this.currentBudget = res[0];
         } else {
           // If there is no budget, create a new one
-          let newBudget:Budget = {
+          let newBudget: Budget = {
             start_date: startDate,
             end_date: endDate,
             user: userId,
             allocations: []
           }
-  
+
           this._financeTrackerApi.CreateBudget(newBudget).subscribe(res => {
-            console.log("new budget created");
-          })
+            console.log(res)
+            this.currentBudget = res
+          });
         }
       })
-  
+
       // Get all other budgets
       this.FetchBudgets();
     });
@@ -89,19 +91,66 @@ export class BudgetsDashboardComponent implements OnInit {
   protected FetchBudgets(): void {
     // Get the current user
     this._authService.GetCurrentUser().subscribe(res => {
+      this.GetCurrentBudget();
 
       // When user is fetched, get the budgets
-    this._financeTrackerApi.ReadBudgetsFiltered(res.data.user?.id, {}).subscribe(returnedBudgets => {
-      this.budgets = returnedBudgets;
-    })
+      this._financeTrackerApi.ReadBudgetsFiltered(res.data.user?.id, {}).subscribe(returnedBudgets => {
+        // this.budgets = returnedBudgets;
+        this.budgets = []
+        returnedBudgets.map((budget) => {
+          if (budget._id != this.currentBudget?._id) {
+            this.budgets.push(budget)
+          }
+        });
+      });
     });
   }
 
-  protected UpdateSelectedBudget(budget :Budget|null):void {
+  private GetCurrentBudget() {
+    // Get the current user
+    this._authService.GetCurrentUser().subscribe(res => {
+      let userId = res.data.user?.id;
+
+      // Get start and end date of the current month
+      let date = new Date();
+      let startDate = new Date(date.getFullYear(), date.getMonth(), 1);
+      let endDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+      let filter = {
+        "start_date": startDate,
+        "end_date": endDate
+      }
+
+      // Try to get the current budget
+      this._financeTrackerApi.ReadBudgetsFiltered(userId, filter).subscribe(res => {
+        console.log(res);
+
+        // If there is a budget, set it as the current budget
+        if (res.length > 0) {
+          this.currentBudget = res[0];
+        } else {
+          // If there is no budget, create a new one
+          let newBudget: Budget = {
+            start_date: startDate,
+            end_date: endDate,
+            user: userId,
+            allocations: []
+          }
+
+          this._financeTrackerApi.CreateBudget(newBudget).subscribe(res => {
+            console.log(res)
+            this.currentBudget = res
+          });
+        }
+      })
+    });
+  }
+
+  protected UpdateSelectedBudget(budget: Budget | null): void {
     this.selectedBudget = budget;
   }
 
-  protected DeleteBudget(budget:Budget):void {
+  protected DeleteBudget(budget: Budget): void {
     this._financeTrackerApi.DeleteBudget(budget._id, budget).subscribe(() => {
       this.FetchBudgets();
     })

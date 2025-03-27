@@ -10,17 +10,19 @@
         <div class="container">
             <h1>Budgets</h1>
             <button mat-fab extended class="mb-2"
-                (click)="UpdateSelectedBudget(null); drawer.toggle()"><mat-icon>edit</mat-icon> Create New
-                Budget</button>
+                (click)="UpdateSelectedBudget(null); drawer.toggle()"><mat-icon>settings</mat-icon>Manage This
+                Month's Budget</button>
             <div class="row">
                 <div class="col-12 col-lg-6">
                     <app-current-budget [currentBudget]="currentBudget"></app-current-budget>
                 </div>
                 <div class="col-12 col-lg-6">
+                    <h2 class="fs-3">Previous Budgets</h2>
                     <mat-accordion>
                         @for (budget of budgets; track budget) {
                         <app-budget-info [budget]="budget" (deleteBudgetEvent)="DeleteBudget($event)"
                             (editBudgetEvent)="UpdateSelectedBudget($event); drawer.toggle()"></app-budget-info>
+
                         }
                     </mat-accordion>
                 </div>

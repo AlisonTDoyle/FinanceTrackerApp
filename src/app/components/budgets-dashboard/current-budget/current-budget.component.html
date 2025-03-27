@@ -3,7 +3,7 @@
         <div class="container">
             <H2 class="fs-3">Current Budget ({{currentBudget?.start_date | date:"dd MMM YY"}} -
                 {{currentBudget?.end_date | date:"dd MMM YY"}})</H2>
-            <table mat-table [dataSource]="budgetAllocations">
+            <table mat-table [dataSource]="budgetAllocations" style="background-color: white;">
                 <ng-container matColumnDef="category">
                     <th mat-header-cell *matHeaderCellDef> Category Name </th>
                     <td mat-cell *matCellDef="let allocation"> {{allocation.category.name}} </td>

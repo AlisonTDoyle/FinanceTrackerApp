@@ -82,14 +82,9 @@ export class FinanceTrackerApiService {
   //#endregion
 
   //#region budgets
-  public CreateBudget(newBudget: Budget) {
+  public CreateBudget(newBudget: Budget):Observable<Budget> {
     return this._httpClient.post<Budget>(this._budgetUrl, newBudget)
       .pipe(
-        tap((data) => {
-          // Debug message
-          console.log('Data: ' + JSON.stringify(data))
-        }),
-        catchError(this.HandleError)
       );
   }
 
